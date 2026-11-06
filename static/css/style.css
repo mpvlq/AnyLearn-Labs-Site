@@ -75,6 +75,15 @@ body {
   position: relative;
 }
 
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
 body::before {
   content: '';
   position: fixed;
@@ -87,6 +96,8 @@ body::before {
     radial-gradient(circle 900px at 90% 20%, rgba(140, 90, 25, 0.25) 0%, rgba(90, 60, 15, 0.1) 50%, transparent 80%);
   pointer-events: none;
   z-index: 0;
+  animation: breathe 12s ease-in-out infinite;
+  transform-origin: center center;
 }
 
 body > * {
@@ -107,6 +118,62 @@ a:hover {
 ::selection {
   background: var(--color-selection-bg);
   color: var(--color-text);
+}
+
+/* Hover Effects */
+.h-nav:hover {
+  color: var(--color-accent) !important;
+  border-bottom-color: var(--color-accent) !important;
+}
+
+.h-cta:hover {
+  background: var(--color-hover-bg);
+  color: var(--color-accent-hover) !important;
+}
+
+.h-chip:hover {
+  border-color: var(--color-accent-dark) !important;
+  color: var(--color-accent) !important;
+}
+
+.h-row:hover {
+  color: var(--color-accent) !important;
+}
+
+.h-foot:hover {
+  color: var(--color-accent) !important;
+}
+
+.h-input:focus {
+  border-color: var(--color-accent) !important;
+}
+
+.h-submit:hover {
+  background: var(--color-accent-hover) !important;
+}
+
+.h-account:hover {
+  border-color: var(--color-accent-dark) !important;
+  color: var(--color-accent) !important;
+}
+
+.h-module-btn:hover {
+  border-color: var(--color-border-module) !important;
+  color: var(--color-accent) !important;
+}
+
+.h-lesson-link:hover {
+  color: var(--color-accent) !important;
+}
+
+.h-start-btn:hover {
+  background: var(--color-hover-bg);
+  color: var(--color-accent-hover) !important;
+}
+
+.h-unlock-btn:hover {
+  border-color: var(--color-accent-dark) !important;
+  color: var(--color-accent) !important;
 }
 
 input::placeholder {
@@ -570,6 +637,46 @@ input::placeholder {
   color: #74c0fc;
 }
 
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 48px;
+  height: 48px;
+  background: rgba(194, 141, 65, 0.15);
+  border: 1px solid rgba(194, 141, 65, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  background: rgba(194, 141, 65, 0.25);
+  border-color: rgba(194, 141, 65, 0.5);
+  transform: translateY(-2px);
+}
+
+.scroll-to-top svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  fill: none;
+}
+
 /* Responsive Design - Mobile First Approach */
 @media (max-width: 640px) {
   header {
@@ -592,6 +699,13 @@ input::placeholder {
 
   .hero-graphic {
     margin-left: 0;
+  }
+
+  .scroll-to-top {
+    right: 20px;
+    bottom: 20px;
+    width: 44px;
+    height: 44px;
   }
 }
 

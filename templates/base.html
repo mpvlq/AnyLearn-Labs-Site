@@ -28,6 +28,36 @@
 
     {% include 'components/footer.html' %}
 
+    <button class="scroll-to-top" aria-label="Scroll to top">
+        <svg viewBox="0 0 24 24">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <script>
+        // Scroll to top functionality
+        (function() {
+            const scrollBtn = document.querySelector('.scroll-to-top');
+
+            // Show/hide button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 50) {
+                    scrollBtn.classList.add('visible');
+                } else {
+                    scrollBtn.classList.remove('visible');
+                }
+            });
+
+            // Scroll to top on click
+            scrollBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        })();
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

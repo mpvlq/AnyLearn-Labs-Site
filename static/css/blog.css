@@ -1,16 +1,5 @@
 /* Blog-specific styles */
 
-.h-nav:hover {
-  color: var(--color-accent) !important;
-  border-bottom-color: var(--color-accent) !important;
-}
-.h-cta:hover { background: var(--color-hover-bg); color: var(--color-accent-hover) !important; }
-.h-chip:hover { border-color: var(--color-accent-dark) !important; color: var(--color-accent) !important; }
-.h-row:hover { color: var(--color-accent) !important; }
-.h-foot:hover { color: var(--color-accent) !important; }
-.h-input:focus { border-color: var(--color-accent) !important; }
-.h-submit:hover { background: var(--color-accent-hover) !important; }
-
 .blog-body p { margin: 0 0 1.1em; }
 .blog-messages { max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); }
 .blog-messages div { padding: 12px 18px; border: 1px solid #5a4a36; border-radius: 4px; color: #facb8d; font-size: 15px; }
