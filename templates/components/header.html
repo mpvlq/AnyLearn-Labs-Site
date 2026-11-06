@@ -1,0 +1,9 @@
+<header style="max-width: 1160px; margin: 0 auto; padding: 28px clamp(20px, 5vw, 48px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap">
+    {% include 'components/logo.html' %}
+    <nav style="display: flex; gap: 42px; margin-left: auto; font-size: 18px; white-space: nowrap">
+        <a href="{% url 'courses:course_list' %}" style="color: #d9cfc2; transition: color 0.2s, border-color 0.2s; border-bottom: 2px solid transparent; padding-bottom: 4px" class="h-nav">Kursy</a>
+        <a href="{% url 'blog:blog_list' %}" style="color: #d9cfc2; transition: color 0.2s, border-color 0.2s; border-bottom: 2px solid transparent; padding-bottom: 4px" class="h-nav">Blog</a>
+        <a href="#wspolpraca" style="color: #d9cfc2; transition: color 0.2s, border-color 0.2s; border-bottom: 2px solid transparent; padding-bottom: 4px" class="h-nav">Współpraca</a>
+        <a href="#o-nas" style="color: #d9cfc2; transition: color 0.2s, border-color 0.2s; border-bottom: 2px solid transparent; padding-bottom: 4px" class="h-nav">O nas</a>
+    </nav>
+</header>

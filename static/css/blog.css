@@ -1,0 +1,61 @@
+/* Blog-specific styles */
+
+.h-nav:hover {
+  color: var(--color-accent) !important;
+  border-bottom-color: var(--color-accent) !important;
+}
+.h-cta:hover { background: var(--color-hover-bg); color: var(--color-accent-hover) !important; }
+.h-chip:hover { border-color: var(--color-accent-dark) !important; color: var(--color-accent) !important; }
+.h-row:hover { color: var(--color-accent) !important; }
+.h-foot:hover { color: var(--color-accent) !important; }
+.h-input:focus { border-color: var(--color-accent) !important; }
+.h-submit:hover { background: var(--color-accent-hover) !important; }
+
+.blog-body p { margin: 0 0 1.1em; }
+.blog-messages { max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); }
+.blog-messages div { padding: 12px 18px; border: 1px solid #5a4a36; border-radius: 4px; color: #facb8d; font-size: 15px; }
+
+/* Blog header section */
+section.blog-header,
+.blog-header {
+  max-width: 1160px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: clamp(48px, 8vw, 104px) clamp(20px, 5vw, 48px) clamp(40px, 6vw, 72px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 22px !important;
+}
+
+/* Blog main content */
+main.blog-main,
+.blog-main {
+  max-width: 1160px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0 clamp(20px, 5vw, 48px) clamp(64px, 9vw, 112px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: clamp(48px, 7vw, 88px) !important;
+}
+
+/* Blog newsletter section */
+section.blog-newsletter,
+.blog-newsletter {
+  max-width: 1160px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0 clamp(20px, 5vw, 48px) clamp(72px, 10vw, 120px) !important;
+}
+
+/* Blog article detail */
+article.blog-article,
+.blog-article {
+  max-width: 720px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: clamp(48px, 8vw, 104px) clamp(20px, 5vw, 48px) clamp(48px, 7vw, 88px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 22px !important;
+}

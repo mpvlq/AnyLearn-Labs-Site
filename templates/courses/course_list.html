@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Wszystkie kursy - AnyLearn Labs{% endblock %}
+
+{% block content %}
+<section style="max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) clamp(72px, 10vw, 120px); display: flex; flex-direction: column; gap: 36px">
+    <div class="section-header" style="padding-top: 28px; border-top: 1px solid #2e261d">
+        <h2 class="section-title">Wszystkie kursy</h2>
+        <span class="section-subtitle">Przerabiaj je jak najszybciej i wdrażaj bezpośrednio po ukończeniu</span>
+    </div>
+    <div class="course-grid">
+        {% for course in page_obj %}
+        <a href="{% url 'courses:course_detail' course.slug %}" class="course-card">
+            <span class="course-meta">{{ course.get_difficulty_display }} · {{ course.lesson_count }} lekcji</span>
+            <span class="course-title">{{ course.title }}</span>
+            <span class="course-description">{{ course.short_description }}</span>
+            <span class="course-link">
+                {% if course.is_free %}
+                    Rozpocznij kurs (Darmowy) →
+                {% else %}
+                    Rozpocznij kurs ({{ course.price }} zł) →
+                {% endif %}
+            </span>
+        </a>
+        {% empty %}
+        <p style="color: #a49a8d;">Wkrótce pojawią się nowe kursy!</p>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <div style="display: flex; justify-content: center; gap: 12px; margin-top: 48px;">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn-secondary btn-large">← Poprzednia</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn-secondary btn-large">Następna →</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

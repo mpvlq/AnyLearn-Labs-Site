@@ -1,0 +1,82 @@
+{% extends 'courses/course_base.html' %}
+
+{% block title %}{{ course.title }} · AnyLearn Labs{% endblock %}
+
+{% block content %}
+  <section style="max-width: 1160px; margin: 0 auto; padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 48px) clamp(32px, 5vw, 56px); display: flex; flex-direction: column; gap: 18px">
+    <span style="font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #c28d41">Kurs</span>
+    <h1 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: clamp(36px, 5.5vw, 58px); line-height: 1.08; letter-spacing: -0.02em; color: #fff3e4; text-wrap: balance">{{ course.title }}</h1>
+    <span style="font-size: 15px; color: #8a7f70">{{ modules|length }} moduły</span>
+  </section>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) clamp(64px, 9vw, 112px); display: flex; flex-direction: column; gap: clamp(48px, 7vw, 88px)">
+
+    {% for module in modules %}
+    <article data-module="{{ forloop.counter }}" style="border: 1px solid {% if forloop.first %}#3a3026{% else %}#2e261d{% endif %}; border-radius: 4px; display: flex; flex-direction: column">
+      <div style="display: flex; gap: 22px; padding: clamp(22px, 3vw, 32px); align-items: flex-start">
+        <div style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid {% if forloop.first %}#c28d41{% else %}#3a3026{% endif %}; display: flex; align-items: center; justify-content: center; color: {% if forloop.first %}#facb8d{% else %}#8a7f70{% endif %}; font-size: 17px; font-variant-numeric: tabular-nums">
+          {{ forloop.counter }}
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: {% if forloop.first %}#c28d41{% else %}#8a7f70{% endif %}; font-variant-numeric: tabular-nums">Moduł {{ forloop.counter }}</span>
+          <h2 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 26px; letter-spacing: -0.01em; color: {% if forloop.first %}#fff3e4{% else %}#d9cfc2{% endif %}">{{ module.title }}</h2>
+          <p style="margin: 0; max-width: 680px; font-size: 16px; line-height: 1.6; color: {% if forloop.first %}#bab0a3{% else %}#a49a8d{% endif %}; text-wrap: pretty">{{ module.description }}</p>
+        </div>
+        {% if forloop.first %}
+        <button onclick="toggleModule(this)" aria-label="Pokaż lekcje" class="h-module-btn" style="flex: 0 0 auto; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid transparent; border-radius: 4px; color: #d9cfc2; cursor: pointer">
+          <svg class="module-chevron open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        {% endif %}
+      </div>
+
+      {% if forloop.first %}
+      <div class="module-lessons" style="margin: 0 clamp(22px, 3vw, 32px); padding-left: 68px; display: flex; flex-direction: column">
+        {% for lesson in module.lessons %}
+        <a href="#" class="h-lesson-link" style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid #2e261d; color: #fff3e4">
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+            <span style="font-size: 12px; color: #8a7f70; font-variant-numeric: tabular-nums">Lekcja {{ forloop.counter }}</span>
+            <span style="font-size: 18px">{{ lesson.title }}</span>
+          </span>
+          <span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid {% if forloop.first %}#c28d41{% else %}#3a3026{% endif %}; display: flex; align-items: center; justify-content: center; color: #facb8d">
+            {% if forloop.first %}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+            {% endif %}
+          </span>
+        </a>
+        {% endfor %}
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding: 20px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d">
+        <span style="flex: 0 0 auto; min-width: 56px; font-size: 18px; font-weight: 500; color: #fff3e4; font-variant-numeric: tabular-nums">33 %</span>
+        <div style="flex: 1 1 200px; height: 4px; background: #2e261d; border-radius: 2px; overflow: hidden"><div style="height: 100%; width: 33%; background: #c28d41; border-radius: 2px; transition: width .3s"></div></div>
+        <a href="#" class="h-start-btn" style="flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 9px 18px; border: 1px solid #c28d41; border-radius: 4px; font-size: 15px; color: #facb8d; white-space: nowrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>Kontynuuj
+        </a>
+      </div>
+      {% else %}
+      {# Locked modules #}
+      <div style="display: flex; align-items: center; gap: 12px; padding: 18px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d; font-size: 15px; color: #8a7f70">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Dostępny po ukończeniu modułu {{ forloop.counter|add:"-1" }}
+      </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+
+  </main>
+
+<script>
+function toggleModule(btn) {
+  const article = btn.closest('article');
+  const lessons = article.querySelector('.module-lessons');
+  const chevron = btn.querySelector('.module-chevron');
+
+  if (lessons.style.display === 'none') {
+    lessons.style.display = 'flex';
+    chevron.classList.add('open');
+  } else {
+    lessons.style.display = 'none';
+    chevron.classList.remove('open');
+  }
+}
+</script>
+{% endblock %}

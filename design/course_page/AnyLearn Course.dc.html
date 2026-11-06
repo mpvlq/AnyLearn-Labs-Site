@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-4dd99f8a-1b0a-4034-9c9d-97d52fa52633/styles.css">
+<script src="_ds/classical-4dd99f8a-1b0a-4034-9c9d-97d52fa52633/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&subset=latin-ext&display=swap">
+<style>
+  body { margin: 0; background: #14110d; }
+  a { color: #facb8d; text-decoration: none; }
+  a:hover { color: #ffe3bf; }
+  ::selection { background: #5a3b0a; color: #fff3e4; }
+  button:focus-visible, a:focus-visible { outline: 2px solid #facb8d; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div lang="pl" style="min-height: 100vh; background: #14110d; color: #fff3e4; font-family: Lora, Georgia, serif; -webkit-font-smoothing: antialiased">
+
+  <header style="max-width: 1160px; margin: 0 auto; padding: 28px clamp(20px, 5vw, 48px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap">
+    <a href="AnyLearn Landing.dc.html" style="display: flex; align-items: center; gap: 12px; color: #fff3e4">
+      <svg width="34" height="34" viewBox="-6 -6 76 76" fill="none" style="display: block">
+        <g transform="rotate(-45 32 32)">
+          <g stroke="#c28d41" stroke-width="5" stroke-linecap="round">
+            <path d="M18 25 C15 19 13 14 10 8"></path>
+            <path d="M15 31.5 C12 30.5 10 31 7 30"></path>
+            <path d="M18 38.5 C15 43 13 46 11 50"></path>
+            <path d="M33 32 H48"></path>
+            <path d="M48 32 C52 28 55 25 59 22"></path>
+            <path d="M48 32 C51 35 53 37 55 40"></path>
+          </g>
+          <circle cx="24" cy="32" r="9.5" fill="#ffe3bf"></circle>
+          <g fill="#facb8d">
+            <circle cx="10" cy="8" r="3.8"></circle>
+            <circle cx="7" cy="30" r="3.4"></circle>
+            <circle cx="11" cy="50" r="3.6"></circle>
+            <circle cx="59" cy="22" r="3.6"></circle>
+            <circle cx="55" cy="40" r="3.2"></circle>
+          </g>
+        </g>
+      </svg>
+      <span style="display: flex; flex-direction: column; gap: 3px">
+        <span style="font-weight: 500; font-size: 20px; line-height: 1; letter-spacing: -0.01em"><span style="color: #facb8d">Any</span>Learn</span>
+        <span style="font-size: 8.5px; letter-spacing: 0.36em; text-transform: uppercase; color: #c28d41">Labs</span>
+      </span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 28px; margin-left: auto">
+    <nav style="display: flex; gap: 28px; font-size: 15px; white-space: nowrap">
+      <a href="#" style="color: #facb8d; border-bottom: 1px solid #c28d41; padding-bottom: 2px">Moje kursy</a>
+      <a href="AnyLearn Blog.dc.html" style="color: #d9cfc2" style-hover="color: #facb8d">Blog</a>
+    </nav>
+    <a href="#" aria-label="Konto" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid #3a3026; border-radius: 50%; color: #d9cfc2" style-hover="border-color: #c28d41; color: #facb8d">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </a>
+    </div>
+  </header>
+
+  <section style="max-width: 1160px; margin: 0 auto; padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 48px) clamp(32px, 5vw, 56px); display: flex; flex-direction: column; gap: 18px">
+    <span style="font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #c28d41">Kurs</span>
+    <h1 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: clamp(36px, 5.5vw, 58px); line-height: 1.08; letter-spacing: -0.02em; color: #fff3e4; text-wrap: balance">Nauka z Gemini Notebook</h1>
+    <span style="font-size: 15px; color: #8a7f70">4 moduły</span>
+  </section>
+
+  <main style="max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) clamp(72px, 10vw, 120px); display: flex; flex-direction: column; gap: 20px">
+
+    <article data-screen-label="Moduł 1" style="border: 1px solid #3a3026; border-radius: 4px; display: flex; flex-direction: column">
+      <div style="display: flex; gap: 22px; padding: clamp(22px, 3vw, 32px); align-items: flex-start">
+        <div style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #c28d41; display: flex; align-items: center; justify-content: center; color: #facb8d; font-size: 17px; font-variant-numeric: tabular-nums">
+          <sc-if value="{{ m1Complete }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+          <sc-if value="{{ m1NotComplete }}" hint-placeholder-val="{{ true }}">1</sc-if>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #c28d41; font-variant-numeric: tabular-nums">Moduł 1</span>
+          <h2 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 26px; letter-spacing: -0.01em; color: #fff3e4">Zbieranie materiałów</h2>
+          <p style="margin: 0; max-width: 680px; font-size: 16px; line-height: 1.6; color: #bab0a3; text-wrap: pretty">Przygotujesz źródła, z których notatnik będzie korzystał: własne notatki, materiały z wykładów i nagrania.</p>
+        </div>
+        <button onClick="{{ toggle }}" aria-label="Pokaż lekcje" style="flex: 0 0 auto; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid transparent; border-radius: 4px; color: #d9cfc2; cursor: pointer" style-hover="border-color: #3a3026; color: #facb8d">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="transition: transform .2s; transform: {{ chevronRot }}"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+      </div>
+
+      <sc-if value="{{ open }}" hint-placeholder-val="{{ true }}">
+        <div style="margin: 0 clamp(22px, 3vw, 32px); padding-left: 68px; display: flex; flex-direction: column">
+          <a href="AnyLearn Lesson.dc.html?lekcja=1" style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid #2e261d; color: #fff3e4" style-hover="color: #facb8d">
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12px; color: #8a7f70; font-variant-numeric: tabular-nums">Lekcja 1</span><span style="font-size: 18px">Wykorzystanie notatek</span></span>
+            <sc-if value="{{ d1 }}" hint-placeholder-val="{{ true }}"><span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #c28d41; display: flex; align-items: center; justify-content: center; color: #facb8d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+            <sc-if value="{{ nd1 }}" hint-placeholder-val="{{ false }}"><span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #3a3026"></span></sc-if>
+          </a>
+          <a href="AnyLearn Lesson.dc.html?lekcja=2" style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid #2e261d; color: #fff3e4" style-hover="color: #facb8d">
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12px; color: #8a7f70; font-variant-numeric: tabular-nums">Lekcja 2</span><span style="font-size: 18px">Notatki metodą CORE</span></span>
+            <sc-if value="{{ d2 }}" hint-placeholder-val="{{ false }}"><span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #c28d41; display: flex; align-items: center; justify-content: center; color: #facb8d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+            <sc-if value="{{ nd2 }}" hint-placeholder-val="{{ true }}"><span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #3a3026"></span></sc-if>
+          </a>
+          <a href="AnyLearn Lesson.dc.html?lekcja=3" style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid #2e261d; color: #fff3e4" style-hover="color: #facb8d">
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12px; color: #8a7f70; font-variant-numeric: tabular-nums">Lekcja 3</span><span style="font-size: 18px">Źródła multimedialne</span></span>
+            <sc-if value="{{ d3 }}" hint-placeholder-val="{{ false }}"><span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #c28d41; display: flex; align-items: center; justify-content: center; color: #facb8d"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span></sc-if>
+            <sc-if value="{{ nd3 }}" hint-placeholder-val="{{ true }}"><span style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid #3a3026"></span></sc-if>
+          </a>
+        </div>
+      </sc-if>
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding: 20px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d">
+        <span style="flex: 0 0 auto; min-width: 56px; font-size: 18px; font-weight: 500; color: #fff3e4; font-variant-numeric: tabular-nums">{{ pctLabel }}</span>
+        <div style="flex: 1 1 200px; height: 4px; background: #2e261d; border-radius: 2px; overflow: hidden"><div style="height: 100%; width: {{ barW }}; background: #c28d41; border-radius: 2px; transition: width .3s"></div></div>
+        <a href="{{ m1Href }}" style="flex: 0 0 auto; display: flex; align-items: center; gap: 10px; padding: 9px 18px; border: 1px solid #c28d41; border-radius: 4px; font-size: 15px; color: #facb8d; white-space: nowrap" style-hover="background: #2a2117; color: #ffe3bf">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>{{ m1Action }}
+        </a>
+      </div>
+    </article>
+
+    <article data-screen-label="Moduł 2" style="border: 1px solid #2e261d; border-radius: 4px; display: flex; flex-direction: column">
+      <div style="display: flex; gap: 22px; padding: clamp(22px, 3vw, 32px); align-items: flex-start">
+        <div style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #3a3026; display: flex; align-items: center; justify-content: center; color: #8a7f70; font-size: 17px; font-variant-numeric: tabular-nums">2</div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8a7f70; font-variant-numeric: tabular-nums">Moduł 2</span>
+          <h2 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 26px; letter-spacing: -0.01em; color: #d9cfc2">Rozmowa z wiedzą</h2>
+          <p style="margin: 0; max-width: 680px; font-size: 16px; line-height: 1.6; color: #a49a8d; text-wrap: pretty">Nauczysz się zadawać pytania swoim materiałom, prosić o wyjaśnienia i porównywać źródła.</p>
+        </div>
+      </div>
+      <sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 18px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d; font-size: 15px; color: #8a7f70">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Dostępny po ukończeniu modułu 1
+        </div>
+      </sc-if>
+      <sc-if value="{{ unlocked }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding: 20px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d">
+          <span style="min-width: 56px; font-size: 18px; font-weight: 500; color: #d9cfc2; font-variant-numeric: tabular-nums">0 %</span>
+          <div style="flex: 1 1 200px; height: 4px; background: #2e261d; border-radius: 2px"></div>
+          <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 9px 18px; border: 1px solid #5a4a36; border-radius: 4px; font-size: 15px; color: #d9cfc2; white-space: nowrap" style-hover="border-color: #c28d41; color: #facb8d"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>Rozpocznij</a>
+        </div>
+      </sc-if>
+    </article>
+
+    <article data-screen-label="Moduł 3" style="border: 1px solid #2e261d; border-radius: 4px; display: flex; flex-direction: column">
+      <div style="display: flex; gap: 22px; padding: clamp(22px, 3vw, 32px); align-items: flex-start">
+        <div style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #3a3026; display: flex; align-items: center; justify-content: center; color: #8a7f70; font-size: 17px; font-variant-numeric: tabular-nums">3</div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8a7f70; font-variant-numeric: tabular-nums">Moduł 3</span>
+          <h2 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 26px; letter-spacing: -0.01em; color: #d9cfc2">Testowanie</h2>
+          <p style="margin: 0; max-width: 680px; font-size: 16px; line-height: 1.6; color: #a49a8d; text-wrap: pretty">Wykorzystasz notatnik do tworzenia pytań sprawdzających i fiszek na podstawie własnych źródeł.</p>
+        </div>
+      </div>
+      <sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 18px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d; font-size: 15px; color: #8a7f70">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Dostępny po ukończeniu modułu 2
+        </div>
+      </sc-if>
+      <sc-if value="{{ unlocked }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding: 20px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d">
+          <span style="min-width: 56px; font-size: 18px; font-weight: 500; color: #d9cfc2; font-variant-numeric: tabular-nums">0 %</span>
+          <div style="flex: 1 1 200px; height: 4px; background: #2e261d; border-radius: 2px"></div>
+          <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 9px 18px; border: 1px solid #5a4a36; border-radius: 4px; font-size: 15px; color: #d9cfc2; white-space: nowrap" style-hover="border-color: #c28d41; color: #facb8d"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>Rozpocznij</a>
+        </div>
+      </sc-if>
+    </article>
+
+    <article data-screen-label="Moduł 4" style="border: 1px solid #2e261d; border-radius: 4px; display: flex; flex-direction: column">
+      <div style="display: flex; gap: 22px; padding: clamp(22px, 3vw, 32px); align-items: flex-start">
+        <div style="flex: 0 0 auto; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #3a3026; display: flex; align-items: center; justify-content: center; color: #8a7f70; font-size: 17px; font-variant-numeric: tabular-nums">4</div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+          <span style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8a7f70; font-variant-numeric: tabular-nums">Moduł 4</span>
+          <h2 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 26px; letter-spacing: -0.01em; color: #d9cfc2">Sprawdzian</h2>
+          <p style="margin: 0; max-width: 680px; font-size: 16px; line-height: 1.6; color: #a49a8d; text-wrap: pretty">Końcowy test obejmujący materiał ze wszystkich modułów.</p>
+        </div>
+      </div>
+      <sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 18px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d; font-size: 15px; color: #8a7f70">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Dostępny po ukończeniu modułu 3
+        </div>
+      </sc-if>
+      <sc-if value="{{ unlocked }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding: 20px clamp(22px, 3vw, 32px); border-top: 1px solid #2e261d">
+          <span style="min-width: 56px; font-size: 18px; font-weight: 500; color: #d9cfc2; font-variant-numeric: tabular-nums">0 %</span>
+          <div style="flex: 1 1 200px; height: 4px; background: #2e261d; border-radius: 2px"></div>
+          <a href="#" style="display: flex; align-items: center; gap: 10px; padding: 9px 18px; border: 1px solid #5a4a36; border-radius: 4px; font-size: 15px; color: #d9cfc2; white-space: nowrap" style-hover="border-color: #c28d41; color: #facb8d"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>Rozpocznij</a>
+        </div>
+      </sc-if>
+    </article>
+  </main>
+
+  <footer style="max-width: 1160px; margin: 0 auto; padding: 32px clamp(20px, 5vw, 48px) 48px; border-top: 1px solid #2e261d; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; font-size: 14px; color: #8a7f70">
+    <span style="font-weight: 500; font-size: 16px; color: #d9cfc2"><span style="color: #facb8d">Any</span>Learn Labs</span>
+    <span style="margin-left: auto; font-variant-numeric: tabular-nums">© 2026</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lockModules&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Moduły&quot;}}">
+class Component extends DCLogic {
+  state = { done: [true, false, false], open: true };
+  componentDidMount() {
+    try {
+      const s = JSON.parse(localStorage.getItem("anylearn-gemini-progress"));
+      if (Array.isArray(s) && s.length === 3) this.setState({ done: s });
+    } catch (e) {}
+  }
+  renderVals() {
+    const d = this.state.done;
+    const n = d.filter(Boolean).length;
+    const pct = Math.round((n / 3) * 100);
+    const next = d.findIndex((x) => !x);
+    const locked = this.props.lockModules ?? true;
+    return {
+      d1: d[0], nd1: !d[0], d2: d[1], nd2: !d[1], d3: d[2], nd3: !d[2],
+      m1Complete: n === 3, m1NotComplete: n < 3,
+      pctLabel: pct + " %", barW: pct + "%",
+      m1Action: n === 0 ? "Rozpocznij" : n === 3 ? "Powtórz moduł" : "Kontynuuj",
+      m1Href: "AnyLearn Lesson.dc.html?lekcja=" + (next < 0 ? 1 : next + 1),
+      open: this.state.open,
+      chevronRot: this.state.open ? "rotate(180deg)" : "none",
+      toggle: () => this.setState((s) => ({ open: !s.open })),
+      locked, unlocked: !locked,
+    };
+  }
+}
+</script>
+</body>
+</html>
