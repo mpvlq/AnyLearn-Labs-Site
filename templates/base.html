@@ -28,6 +28,55 @@
 
     {% include 'components/footer.html' %}
 
+    <!-- Mobile Side Menu -->
+    <div id="menu-scrim" class="menu-scrim"></div>
+    <aside id="side-menu" class="side-menu">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid #2e261d">
+            <span style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: #c28d41">Menu</span>
+            <button id="menu-close-btn" aria-label="Zamknij menu" style="width: 44px; height: 44px; margin-right: -10px; border: 0; background: transparent; color: #d9cfc2; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color 0.2s">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav style="display: flex; flex-direction: column">
+            <a href="{% url 'courses:course_list' %}" class="menu-link">
+                <span style="font-size: 13px; color: #c28d41; font-variant-numeric: tabular-nums">01</span>
+                <span style="display: flex; flex-direction: column; gap: 4px">
+                    <span style="font-size: 26px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1">Kursy</span>
+                    <span style="font-size: 13px; color: #a49a8d">Skondensowane ścieżki nauki</span>
+                </span>
+                <span style="font-size: 16px; color: #5a4a36">→</span>
+            </a>
+            <a href="{% url 'blog:blog_list' %}" class="menu-link">
+                <span style="font-size: 13px; color: #c28d41; font-variant-numeric: tabular-nums">02</span>
+                <span style="display: flex; flex-direction: column; gap: 4px">
+                    <span style="font-size: 26px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1">Blog</span>
+                    <span style="font-size: 13px; color: #a49a8d">Artykuły o nauce i rozwoju</span>
+                </span>
+                <span style="font-size: 16px; color: #5a4a36">→</span>
+            </a>
+            <a href="#wspolpraca" class="menu-link">
+                <span style="font-size: 13px; color: #c28d41; font-variant-numeric: tabular-nums">03</span>
+                <span style="display: flex; flex-direction: column; gap: 4px">
+                    <span style="font-size: 26px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1">Współpraca</span>
+                    <span style="font-size: 13px; color: #a49a8d">Możliwości partnerstwa</span>
+                </span>
+                <span style="font-size: 16px; color: #5a4a36">→</span>
+            </a>
+            <a href="#o-nas" class="menu-link">
+                <span style="font-size: 13px; color: #c28d41; font-variant-numeric: tabular-nums">04</span>
+                <span style="display: flex; flex-direction: column; gap: 4px">
+                    <span style="font-size: 26px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1">O nas</span>
+                    <span style="font-size: 13px; color: #a49a8d">Kim jesteśmy i co robimy</span>
+                </span>
+                <span style="font-size: 16px; color: #5a4a36">→</span>
+            </a>
+        </nav>
+    </aside>
+
     <button class="scroll-to-top" aria-label="Scroll to top">
         <svg viewBox="0 0 24 24">
             <polyline points="18 15 12 9 6 15"></polyline>
@@ -35,6 +84,43 @@
     </button>
 
     <script>
+        // Mobile side menu functionality
+        (function() {
+            const menuOpenBtn = document.getElementById('menu-open-btn');
+            const menuCloseBtn = document.getElementById('menu-close-btn');
+            const sideMenu = document.getElementById('side-menu');
+            const menuScrim = document.getElementById('menu-scrim');
+            const menuLinks = document.querySelectorAll('.menu-link');
+
+            function openMenu() {
+                sideMenu.classList.add('active');
+                menuScrim.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                sideMenu.classList.remove('active');
+                menuScrim.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (menuOpenBtn && menuCloseBtn && sideMenu && menuScrim) {
+                // Open menu
+                menuOpenBtn.addEventListener('click', openMenu);
+
+                // Close menu
+                menuCloseBtn.addEventListener('click', closeMenu);
+
+                // Close menu when clicking on scrim
+                menuScrim.addEventListener('click', closeMenu);
+
+                // Close menu when clicking on menu links
+                menuLinks.forEach(function(link) {
+                    link.addEventListener('click', closeMenu);
+                });
+            }
+        })();
+
         // Scroll to top functionality
         (function() {
             const scrollBtn = document.querySelector('.scroll-to-top');
