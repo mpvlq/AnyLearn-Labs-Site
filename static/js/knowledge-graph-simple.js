@@ -434,7 +434,7 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
   function loop(){
     tick();
     stepFx(performance.now());
-    if(autoRot&&!sel&&!drag&&!rot&&!pan)yaw+=.0028;
+    if(autoRot&&!sel&&!drag&&!rot&&!pan)yaw+=.00168;
     draw();
     requestAnimationFrame(loop);
   }
