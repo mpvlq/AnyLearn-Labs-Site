@@ -66,9 +66,12 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
     if(filt.people) nodes.filter(n=>n.kind==='person').forEach(p=>{ if(adj[p.id].some(a=>ids.has(a.other.id))) vis.push(p); });
     const vs = new Set(vis.map(n=>n.id));
     vedges = edges.filter(e => vs.has(e.s.id) && vs.has(e.t.id) && (filt.inferred || e.basis==='stated'));
-    if(sel && !vs.has(sel.id)) sel=null;
+    if(sel && !vs.has(sel.id)) {
+      const prev = sel;
+      sel=null;
+      if(onSelect && prev) onSelect(null); // Notify template to update sidebar
+    }
     alpha=Math.max(alpha,.6);
-    renderPanel();
   }
 
   function tick(){
@@ -200,9 +203,22 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
       if(on&&sel){
         ctx.setLineDash([]);ctx.globalAlpha=1;ctx.font='11px '+css('--body');
         const mx=(x1+x2)/2,my=(y1+y2)/2,tw=ctx.measureText(e.relation).width;
-        ctx.fillStyle=css('--surface');ctx.fillRect(mx-tw/2-3,my-8,tw+6,16);
+
+        // Check for bidirectional edge (reverse edge exists)
+        const hasReverse = vedges.some(e2 => e2.s===e.t && e2.t===e.s);
+        let offsetX = 0, offsetY = 0;
+        if(hasReverse) {
+          // Offset perpendicular to edge direction
+          // Perpendicular vector: (-uy, ux)
+          const offset = 10;
+          const sign = e.s.id < e.t.id ? -1 : 1;
+          offsetX = -uy * offset * sign;
+          offsetY = ux * offset * sign;
+        }
+
+        ctx.fillStyle=css('--surface');ctx.fillRect(mx-tw/2-3+offsetX,my-8+offsetY,tw+6,16);
         ctx.fillStyle=css('--ink');ctx.textAlign='center';ctx.textBaseline='middle';
-        ctx.fillText(e.relation,mx,my);
+        ctx.fillText(e.relation,mx+offsetX,my+offsetY);
       }
     });
 
@@ -347,8 +363,11 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
 
   canvas.addEventListener('pointerleave',()=>{mouse=null;hover=null;});
   canvas.addEventListener('wheel',ev=>{
-    ev.preventDefault();
-    zoomAt(ev.deltaY<0?1.12:1/1.12,...pos(ev));
+    // Only zoom when Ctrl key is pressed
+    if(ev.ctrlKey){
+      ev.preventDefault();
+      zoomAt(ev.deltaY<0?1.12:1/1.12,...pos(ev));
+    }
   },{passive:false});
 
   function zoomAt(f,mx,my){
@@ -361,7 +380,6 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
 
   function select(n,noAnim){
     sel=n;
-    renderPanel();
     if(onSelect) onSelect(n ? n.id : null);
     // Always animate unless explicitly disabled
     if(!noAnim){
@@ -369,36 +387,6 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
     }
   }
 
-  function esc(s){
-    return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  }
-
-  function renderPanel(){
-    const p=document.getElementById('kg-sidebar');
-    if(!p) return;
-
-    if(!sel){
-      const terms=nodes.filter(n=>n.kind==='term');
-      p.innerHTML='<div class="hint"><h2>Wybierz węzeł</h2><p>Dotknij dowolnego węzła, aby zobaczyć definicję, przykład i wszystkie powiązania.</p></div>'+
-        [1,2,3,4].map(w=>'<h3 style="color:'+wcol(w)+'">Tydzień '+w+'</h3><ul>'+terms.filter(t=>t.week===w).map(t=>'<li><button data-id="'+t.id+'">Dzień '+t.day+' · '+esc(t.label)+'</button></li>').join('')+'</ul>').join('');
-    } else {
-      const n=sel, out=adj[n.id].filter(a=>a.dir==='out'), inn=adj[n.id].filter(a=>a.dir==='in');
-      const vs=new Set(vedges);
-      const row=(a,o)=>{
-        if(!vs.has(a.e)) return '';
-        const inf=a.e.basis==='inferred'?'<span class="inf">wnioskowane</span>':'';
-        return '<li><button data-id="'+a.other.id+'">'+(o?'<span class="r">'+esc(a.e.relation)+'</span> → ':'← <span class="r">'+esc(a.e.relation)+'</span> ')+esc(a.other.label)+inf+'</button></li>';
-      };
-      const ro=out.map(a=>row(a,true)).join(''), ri=inn.map(a=>row(a,false)).join('');
-      p.innerHTML='<h2>'+esc(n.label)+'</h2><span class="tag" style="color:'+nodeCol(n)+';border-color:'+nodeCol(n)+'">'+({term:'Termin kursu',concept:'Pojęcie pomocnicze',person:'Badacz'}[n.kind])+'</span>'+
-        (n.day?'<span class="tag">Dzień '+n.day+'</span>':'')+(n.kind!=='person'?'<span class="tag">Tydzień '+n.week+'</span>':'')+
-        '<p>'+esc(n.summary)+'</p>'+(n.example?'<div class="ex">'+esc(n.example)+'</div>':'')+
-        (ro?'<h3>Łączy się z</h3><ul>'+ro+'</ul>':'')+(ri?'<h3>Połączone od</h3><ul>'+ri+'</ul>':'')+
-        '<h3></h3><ul><li><button data-id="">Wróć do przeglądu</button></li></ul>';
-    }
-    p.querySelectorAll('button[data-id]').forEach(b=>b.onclick=()=>select(b.dataset.id?byId[b.dataset.id]:null));
-    p.scrollTop=0;
-  }
 
   // Firing neurons animation
   const calm = !!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -434,7 +422,7 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
   function loop(){
     tick();
     stepFx(performance.now());
-    if(autoRot&&!sel&&!drag&&!rot&&!pan)yaw+=.00168;
+    if(autoRot&&!sel&&!drag&&!rot&&!pan)yaw+=.001176;
     draw();
     requestAnimationFrame(loop);
   }
@@ -446,7 +434,6 @@ export function createGraph(canvas, options = {}, dataOverride = null) {
   for(let i=0;i<500;i++) tick();
   alpha=.02;
   fit();
-  renderPanel();
 
   if(initial && byId[initial]){
     setTimeout(() => select(byId[initial]), 100);

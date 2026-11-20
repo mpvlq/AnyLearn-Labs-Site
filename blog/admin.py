@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BlogPost, BlogCategory
+from .models import BlogPost, BlogCategory, GraphNode, GraphEdge
 
 
 @admin.register(BlogPost)
@@ -41,3 +41,48 @@ class BlogCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'order']
     list_editable = ['order']
     prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(GraphNode)
+class GraphNodeAdmin(admin.ModelAdmin):
+    list_display = ['node_id', 'label', 'kind', 'week', 'day', 'order']
+    list_filter = ['kind', 'week']
+    search_fields = ['node_id', 'label', 'summary']
+    list_editable = ['order']
+    ordering = ['week', 'day', 'kind', 'order']
+
+    fieldsets = (
+        ('Identyfikacja', {
+            'fields': ('node_id', 'label', 'kind')
+        }),
+        ('Lokalizacja w kursie', {
+            'fields': ('week', 'day')
+        }),
+        ('Treść', {
+            'fields': ('summary', 'example')
+        }),
+        ('Organizacja', {
+            'fields': ('order',),
+            'classes': ('collapse',)
+        }),
+    )
+
+
+@admin.register(GraphEdge)
+class GraphEdgeAdmin(admin.ModelAdmin):
+    list_display = ['source', 'relation', 'target', 'basis', 'order']
+    list_filter = ['basis', 'source__week']
+    search_fields = ['source__label', 'target__label', 'relation']
+    list_editable = ['order']
+    autocomplete_fields = ['source', 'target']
+    ordering = ['source', 'order']
+
+    fieldsets = (
+        ('Relacja', {
+            'fields': ('source', 'relation', 'target', 'basis')
+        }),
+        ('Organizacja', {
+            'fields': ('order',),
+            'classes': ('collapse',)
+        }),
+    )

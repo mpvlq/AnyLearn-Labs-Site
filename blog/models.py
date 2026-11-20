@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+import json
 
 
 class BlogPost(models.Model):
@@ -63,3 +64,114 @@ class BlogCategory(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+
+class GraphNode(models.Model):
+    """Knowledge graph node - represents a term, concept, or researcher"""
+    KIND_CHOICES = [
+        ('term', 'Termin kursu'),
+        ('concept', 'Pojęcie pomocnicze'),
+        ('person', 'Badacz'),
+    ]
+
+    WEEK_CHOICES = [
+        (1, 'Tydzień 1 - Fundamenty'),
+        (2, 'Tydzień 2 - Pamięć'),
+        (3, 'Tydzień 3 - Przetwarzanie'),
+        (4, 'Tydzień 4 - Praktyka'),
+    ]
+
+    node_id = models.CharField(
+        max_length=50,
+        primary_key=True,
+        verbose_name='ID węzła',
+        help_text='Unikalny identyfikator węzła (np. "mindset", "test", "dweck")'
+    )
+    label = models.CharField(
+        max_length=200,
+        verbose_name='Nazwa',
+        help_text='Pełna nazwa węzła wyświetlana na grafie'
+    )
+    kind = models.CharField(
+        max_length=10,
+        choices=KIND_CHOICES,
+        verbose_name='Typ węzła'
+    )
+    day = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        verbose_name='Dzień',
+        help_text='Dzień w kursie (opcjonalnie dla badaczy)'
+    )
+    week = models.PositiveSmallIntegerField(
+        choices=WEEK_CHOICES,
+        verbose_name='Tydzień'
+    )
+    summary = models.TextField(
+        verbose_name='Podsumowanie',
+        help_text='Krótki opis pojęcia'
+    )
+    example = models.TextField(
+        blank=True,
+        verbose_name='Przykład',
+        help_text='Opcjonalny przykład użycia'
+    )
+    order = models.PositiveSmallIntegerField(
+        default=0,
+        verbose_name='Kolejność',
+        help_text='Kolejność wyświetlania w panelu administracyjnym'
+    )
+
+    class Meta:
+        ordering = ['week', 'day', 'kind', 'order']
+        verbose_name = 'Węzeł grafu'
+        verbose_name_plural = 'Węzły grafu'
+
+    def __str__(self):
+        return f"{self.label} ({self.node_id})"
+
+
+class GraphEdge(models.Model):
+    """Knowledge graph edge - represents a relationship between two nodes"""
+    BASIS_CHOICES = [
+        ('stated', 'Podane w kursie'),
+        ('inferred', 'Wnioskowane'),
+    ]
+
+    source = models.ForeignKey(
+        GraphNode,
+        on_delete=models.CASCADE,
+        related_name='outgoing_edges',
+        verbose_name='Węzeł źródłowy'
+    )
+    target = models.ForeignKey(
+        GraphNode,
+        on_delete=models.CASCADE,
+        related_name='incoming_edges',
+        verbose_name='Węzeł docelowy'
+    )
+    relation = models.CharField(
+        max_length=100,
+        verbose_name='Relacja',
+        help_text='Etykieta relacji (np. "przewiduje", "koryguje", "autor")'
+    )
+    basis = models.CharField(
+        max_length=10,
+        choices=BASIS_CHOICES,
+        default='stated',
+        verbose_name='Podstawa'
+    )
+    order = models.PositiveSmallIntegerField(
+        default=0,
+        verbose_name='Kolejność',
+        help_text='Kolejność wyświetlania w panelu administracyjnym'
+    )
+
+    class Meta:
+        ordering = ['source', 'order']
+        verbose_name = 'Krawędź grafu'
+        verbose_name_plural = 'Krawędzie grafu'
+        unique_together = ['source', 'target', 'relation']
+
+    def __str__(self):
+        return f"{self.source.node_id} → {self.relation} → {self.target.node_id}"

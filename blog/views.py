@@ -1,6 +1,7 @@
 from django.db.models import Prefetch
 from django.shortcuts import render, get_object_or_404
-from .models import BlogPost, BlogCategory
+from django.http import JsonResponse
+from .models import BlogPost, BlogCategory, GraphNode, GraphEdge
 
 
 def blog_list(request):
@@ -34,3 +35,35 @@ def blog_detail(request, slug):
         'siblings': siblings,
     }
     return render(request, 'blog/blog_detail.html', context)
+
+
+def graph_data(request):
+    """Return knowledge graph data as JSON"""
+    nodes = GraphNode.objects.all()
+    edges = GraphEdge.objects.select_related('source', 'target').all()
+
+    data = {
+        'nodes': [
+            {
+                'id': node.node_id,
+                'label': node.label,
+                'kind': node.kind,
+                'day': node.day,
+                'week': node.week,
+                'summary': node.summary,
+                'example': node.example,
+            }
+            for node in nodes
+        ],
+        'edges': [
+            {
+                'source': edge.source.node_id,
+                'relation': edge.relation,
+                'target': edge.target.node_id,
+                'basis': edge.basis,
+            }
+            for edge in edges
+        ]
+    }
+
+    return JsonResponse(data)

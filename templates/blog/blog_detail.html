@@ -72,8 +72,14 @@
         <div class="knowledge-graph-controls">
           <button id="kg-zoom-in" class="knowledge-graph-zoom-btn" aria-label="Przybliż">+</button>
           <button id="kg-zoom-out" class="knowledge-graph-zoom-btn" aria-label="Oddal">−</button>
-          <button id="kg-back-to-topic" class="knowledge-graph-overview-btn" style="display: none;">Wróć do bieżącego tematu</button>
-          <button id="kg-overview" class="knowledge-graph-overview-btn">Cały kurs</button>
+          <button id="kg-back-to-topic" class="knowledge-graph-overview-btn" style="display: none;">
+            <svg width="16" height="16" viewBox="0 0 22 22" style="vertical-align: middle; margin-right: 6px;">
+              <circle cx="11" cy="11" r="5.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2.5 2.5" opacity="0.7"></circle>
+              <circle cx="11" cy="11" r="2.6" fill="currentColor" opacity="0.5"></circle>
+            </svg>
+            Wróć do bieżącego tematu
+          </button>
+          <button id="kg-overview" class="knowledge-graph-overview-btn">Cała wiedza</button>
         </div>
       </div>
 
@@ -120,9 +126,9 @@
     console.log('=== KNOWLEDGE GRAPH INIT ===');
 
     try {
-      // First, load the graph data from JSON
-      console.log('Loading graph data from JSON...');
-      const dataResponse = await fetch('{% static "js/knowledge-graph-data.json" %}');
+      // First, load the graph data from database API
+      console.log('Loading graph data from API...');
+      const dataResponse = await fetch('{% url "blog:graph_data" %}');
       const DATA = await dataResponse.json();
       console.log('✓ DATA loaded:', DATA.nodes.length, 'nodes,', DATA.edges.length, 'edges');
 
@@ -166,8 +172,8 @@
         const backBtn = document.getElementById('kg-back-to-topic');
         if (!backBtn || articleNodes.length === 0) return;
 
-        // Show button if viewing a node that's NOT in article nodes
-        if (nodeId && !articleNodes.includes(nodeId)) {
+        // Show button if in overview mode OR viewing a node that's NOT in article nodes
+        if (!nodeId || (nodeId && !articleNodes.includes(nodeId))) {
           backBtn.style.display = '';
         } else {
           backBtn.style.display = 'none';
@@ -203,7 +209,7 @@
         sidebar.innerHTML = `
           <div class="knowledge-graph-sidebar-section">
             <span class="knowledge-graph-sidebar-kicker">Przegląd</span>
-            <h3>Cały kurs</h3>
+            <h3>Cała wiedza</h3>
             <p>20 terminów w czterech działach, pojęcia pomocnicze i badacze. Wybierz węzeł, aby zobaczyć szczegóły.</p>
           </div>
           <div class="knowledge-graph-article-list">
@@ -220,7 +226,7 @@
       } else {
         // Node details
         const isArticle = articleNodes.includes(n.id);
-        const kind = {term: 'Termin kursu', concept: 'Pojęcie pomocnicze', person: 'Badacz'}[n.kind];
+        const kind = {term: 'Pojęcie artykułu', concept: 'Pojęcie pomocnicze', person: 'Badacz'}[n.kind];
         const color = nodeCol(n);
 
         const relationships = adj[n.id] || [];
@@ -345,8 +351,9 @@
       updateBackButton(null);
     });
 
-    // Initial sidebar update
+    // Initial sidebar and button update
     updateSidebar(articleNodes[0] || null);
+    updateBackButton(articleNodes[0] || null);
 
     } catch (error) {
       console.error('ERROR loading knowledge graph:', error);
