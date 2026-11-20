@@ -98,8 +98,8 @@
     {% if post.featured_image %}
     <img src="{{ post.featured_image.url }}" alt="" style="width: 100%; border-radius: 4px; margin-bottom: 32px">
     {% endif %}
-    <div style="display: flex; flex-direction: column; gap: 24px; font-size: 18px; line-height: 1.75; color: #d9cfc2; text-wrap: pretty">
-      {{ post.content|linebreaks }}
+    <div class="blog-article-content" style="display: flex; flex-direction: column; gap: 24px; font-size: 18px; line-height: 1.75; color: #d9cfc2; text-wrap: pretty">
+      {{ post.content|safe }}
     </div>
   </div>
 

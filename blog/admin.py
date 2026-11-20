@@ -17,7 +17,13 @@ class BlogPostAdmin(admin.ModelAdmin):
             'fields': ('title', 'slug', 'author', 'category', 'order')
         }),
         ('Treść', {
-            'fields': ('excerpt', 'content', 'featured_image')
+            'fields': ('excerpt', 'content', 'featured_image'),
+            'description': (
+                'Format treści za pomocą HTML:<br>'
+                '• <strong>&lt;p&gt;Akapit tekstu&lt;/p&gt;</strong> - dla akapitów<br>'
+                '• <strong>&lt;h2&gt;Podtytuł&lt;/h2&gt;</strong> - dla podtytułów<br>'
+                'Każdy akapit i podtytuł musi być zamknięty w odpowiednim tagu.'
+            )
         }),
         ('Graf wiedzy', {
             'fields': ('article_nodes',),
