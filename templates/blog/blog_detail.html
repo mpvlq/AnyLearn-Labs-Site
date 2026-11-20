@@ -1,38 +1,367 @@
 {% extends 'blog/blog_base.html' %}
 {% load i18n %}
+{% load static %}
+{% load blog_extras %}
 
 {% block title %}{{ post.title }} · Blog AnyLearn Labs{% endblock %}
 
 {% block content %}
-  {# No article design exists yet; built from the blog index's type scale and colours #}
-  <article style="max-width: 720px; margin: 0 auto; padding: clamp(48px, 8vw, 104px) clamp(20px, 5vw, 48px) clamp(64px, 9vw, 112px); display: flex; flex-direction: column; gap: 22px">
-    <a href="{% url 'blog:blog_list' %}{% if post.category %}#{{ post.category.slug }}{% endif %}" style="font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #c28d41">← {% if post.category %}{{ post.category.name }}{% else %}Blog{% endif %}</a>
-    <h1 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: clamp(40px, 6vw, 64px); line-height: 1.06; letter-spacing: -0.02em; color: #fff3e4">{{ post.title }}</h1>
-    <div style="display: flex; gap: 12px; font-size: 14px; color: #8a7f70; font-variant-numeric: tabular-nums">
-      {% if post.published_at %}<span>{% language "pl" %}{{ post.published_at|date:"j E Y" }}{% endlanguage %}</span><span aria-hidden="true">·</span>{% endif %}
+  {# Article header #}
+  <article style="max-width: 680px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 48px) 0">
+    <a href="{% url 'blog:blog_list' %}{% if post.category %}#{{ post.category.slug }}{% endif %}" style="display: inline-flex; gap: 8px; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: #c28d41; text-decoration: none"><span>←</span><span>{% if post.category %}{{ post.category.name }}{% else %}Blog{% endif %}</span></a>
+    <h1 style="margin: 22px 0 20px; font-family: Lora, Georgia, serif; font-weight: 500; font-size: clamp(38px, 6vw, 60px); line-height: 1.08; letter-spacing: -0.02em; color: #fff3e4; text-wrap: balance">{{ post.title }}</h1>
+    <div style="display: flex; gap: 10px; font-size: 13px; color: #a49a8d; font-variant-numeric: tabular-nums">
+      {% if post.published_at %}<span>{% language "pl" %}{{ post.published_at|date:"j E Y" }}{% endlanguage %}</span><span>·</span>{% endif %}
       <span>{{ post.read_time }} min czytania</span>
     </div>
-    {% if post.featured_image %}
-    <img src="{{ post.featured_image.url }}" alt="" style="width: 100%; border-radius: 4px">
+    {% if post.excerpt %}
+    <p style="margin: 36px 0 0; font-size: 20px; line-height: 1.6; color: #efe6da; text-wrap: pretty">{{ post.excerpt }}</p>
     {% endif %}
-    <div class="blog-body" style="padding-top: 14px; font-size: 18px; line-height: 1.65; color: #d9cfc2">
-      {{ post.content|linebreaks }}
-    </div>
   </article>
 
+  {# Knowledge graph section #}
+  <section aria-label="Graf wiedzy" class="knowledge-graph-section">
+    <div class="knowledge-graph-header">
+      <div class="knowledge-graph-intro">
+        <span class="knowledge-graph-kicker">Graf wiedzy</span>
+        <p>Pojęcia z tego artykułu są zaznaczone. Kliknij dowolny węzeł, aby zobaczyć jego definicję i powiązania.</p>
+      </div>
+    </div>
+
+    <div class="knowledge-graph-container">
+      <div class="knowledge-graph-toolbar">
+        <div class="knowledge-graph-filters">
+          <span class="knowledge-graph-label">Działy</span>
+          <button id="kg-week-1" class="knowledge-graph-week-btn" aria-pressed="true"><span class="knowledge-graph-week-dot week-1"></span>Fundamenty</button>
+          <button id="kg-week-2" class="knowledge-graph-week-btn" aria-pressed="true"><span class="knowledge-graph-week-dot week-2"></span>Pamięć</button>
+          <button id="kg-week-3" class="knowledge-graph-week-btn" aria-pressed="true"><span class="knowledge-graph-week-dot week-3"></span>Przetwarzanie</button>
+          <button id="kg-week-4" class="knowledge-graph-week-btn" aria-pressed="true"><span class="knowledge-graph-week-dot week-4"></span>Praktyka</button>
+        </div>
+        <div class="knowledge-graph-legend">
+          <span class="knowledge-graph-legend-item">
+            <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="5.5" fill="none" stroke="#facb8d" stroke-width="1.3" stroke-dasharray="2.5 2.5"></circle><circle cx="11" cy="11" r="2.6" fill="#e2b46b"></circle></svg>
+            W tym artykule
+          </span>
+          <span class="knowledge-graph-legend-item">
+            <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#bab0a3"></circle></svg>
+            Termin
+          </span>
+          <span class="knowledge-graph-legend-item">
+            <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="3.8" fill="#bab0a3"></circle></svg>
+            Pojęcie
+          </span>
+          <button id="kg-people" class="knowledge-graph-toggle-btn" aria-pressed="true">
+            <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="3.2" fill="none" stroke="#8a7f72" stroke-width="1.4"></circle></svg>
+            Badacz
+          </button>
+          <span class="knowledge-graph-legend-separator"></span>
+          <span class="knowledge-graph-legend-item">
+            <svg width="24" height="8" viewBox="0 0 24 8"><path d="M1 4h22" stroke="#8a7f72" stroke-width="1.2"></path></svg>
+            Podane w kursie
+          </span>
+          <button id="kg-inferred" class="knowledge-graph-toggle-btn" aria-pressed="true">
+            <svg width="24" height="8" viewBox="0 0 24 8"><path d="M1 4h22" stroke="#8a7f72" stroke-width="1.2" stroke-dasharray="4 3"></path></svg>
+            Wnioskowane
+          </button>
+        </div>
+      </div>
+
+      <div class="knowledge-graph-canvas-container">
+        <canvas id="knowledge-graph-canvas" class="knowledge-graph-canvas" role="img" aria-label="Graf wiedzy. Panel boczny podaje te same powiązania w formie tekstu."></canvas>
+        <div class="knowledge-graph-instructions">Przeciągnij, aby obrócić · Ctrl + kółko, aby przybliżyć</div>
+        <div class="knowledge-graph-controls">
+          <button id="kg-zoom-in" class="knowledge-graph-zoom-btn" aria-label="Przybliż">+</button>
+          <button id="kg-zoom-out" class="knowledge-graph-zoom-btn" aria-label="Oddal">−</button>
+          <button id="kg-back-to-topic" class="knowledge-graph-overview-btn" style="display: none;">Wróć do bieżącego tematu</button>
+          <button id="kg-overview" class="knowledge-graph-overview-btn">Cały kurs</button>
+        </div>
+      </div>
+
+      <aside id="kg-sidebar" class="knowledge-graph-sidebar" aria-live="polite">
+        <div class="knowledge-graph-sidebar-section">
+          <span class="knowledge-graph-sidebar-kicker">Przegląd</span>
+          <h3>Graf wiedzy o nauce uczenia się</h3>
+          <p>Wybierz węzeł, aby zobaczyć szczegóły.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {# Article content #}
+  <div style="max-width: 680px; margin: 0 auto; padding: clamp(48px, 7vw, 72px) clamp(20px, 5vw, 48px) 0">
+    {% if post.featured_image %}
+    <img src="{{ post.featured_image.url }}" alt="" style="width: 100%; border-radius: 4px; margin-bottom: 32px">
+    {% endif %}
+    <div style="display: flex; flex-direction: column; gap: 24px; font-size: 18px; line-height: 1.75; color: #d9cfc2; text-wrap: pretty">
+      {{ post.content|linebreaks }}
+    </div>
+  </div>
+
+  {# Continue in category section #}
   {% if siblings %}
-  <main style="max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) clamp(64px, 9vw, 112px); display: flex; flex-direction: column; gap: clamp(48px, 7vw, 88px)">
-    <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px 56px; padding-top: 28px; border-top: 1px solid #2e261d">
-      <div style="display: flex; flex-direction: column; gap: 8px">
-        <span style="font-size: 13px; color: #c28d41">Dalej w dziale</span>
-        <h2 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 32px; letter-spacing: -0.015em; color: #fff3e4">{{ post.category.name }}</h2>
-      </div>
-      <div style="grid-column: span 2; min-width: 0; display: flex; flex-direction: column">
-        {% for other in siblings %}
-        <a href="{{ other.get_absolute_url }}" class="h-row" style="display: flex; align-items: baseline; gap: 20px; padding: 18px 0; border-bottom: 1px solid #2e261d; color: #fff3e4; font-size: 20px; line-height: 1.35"><span style="flex: 1; min-width: 0">{{ other.title }}</span><span style="color: #7d5411; font-size: 16px">→</span></a>
-        {% endfor %}
-      </div>
-    </section>
-  </main>
+  <section style="max-width: 1160px; margin: 0 auto; padding: clamp(72px, 10vw, 112px) clamp(20px, 5vw, 48px) clamp(64px, 9vw, 96px)">
+    <div style="border-top: 1px solid #2e261d; padding-top: 32px; display: flex; flex-direction: column; gap: 8px">
+      <span style="font-size: 12px; color: #c28d41">Dalej w dziale</span>
+      <h2 style="margin: 0 0 16px; font-family: Lora, Georgia, serif; font-weight: 500; font-size: clamp(26px, 3.4vw, 34px); color: #fff3e4">{{ post.category.name }}</h2>
+    </div>
+    <nav style="display: flex; flex-direction: column">
+      {% for other in siblings %}
+      <a href="{{ other.get_absolute_url }}" style="display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid #2e261d; font-size: 18px; color: #fff3e4; text-decoration: none" onmouseover="this.style.color='#facb8d'" onmouseout="this.style.color='#fff3e4'">
+        <span>{{ other.title }}</span>
+        <span style="color: #c28d41">→</span>
+      </a>
+      {% endfor %}
+    </nav>
+  </section>
   {% endif %}
+
+  {# Knowledge graph JavaScript initialization #}
+  <script type="module">
+    console.log('=== KNOWLEDGE GRAPH INIT ===');
+
+    try {
+      // First, load the graph data from JSON
+      console.log('Loading graph data from JSON...');
+      const dataResponse = await fetch('{% static "js/knowledge-graph-data.json" %}');
+      const DATA = await dataResponse.json();
+      console.log('✓ DATA loaded:', DATA.nodes.length, 'nodes,', DATA.edges.length, 'edges');
+
+      // Then import the graph module
+      console.log('Importing knowledge graph module...');
+      const { createGraph } = await import('{% static "js/knowledge-graph-simple.js" %}');
+      console.log('✓ Module imported, createGraph function ready');
+
+      const articleNodes = {{ post.article_nodes|to_js_array|safe }};
+      console.log('✓ Article nodes:', articleNodes);
+
+      const canvas = document.getElementById('knowledge-graph-canvas');
+      const sidebar = document.getElementById('kg-sidebar');
+
+      console.log('✓ Canvas element:', canvas);
+      console.log('✓ Sidebar element:', sidebar);
+
+      if (!canvas) {
+        console.error('ERROR: Canvas element not found!');
+        throw new Error('Canvas element not found');
+      }
+      if (!sidebar) {
+        console.error('ERROR: Sidebar element not found!');
+        throw new Error('Sidebar element not found');
+      }
+
+      console.log('✓ Initializing graph...');
+
+      // Initialize graph with loaded DATA
+      const graph = createGraph(canvas, {
+        focus: articleNodes,
+        initial: articleNodes[0] || null,
+        onSelect: (nodeId) => {
+          updateSidebar(nodeId);
+          updateBackButton(nodeId);
+        }
+      }, DATA);
+
+      // Show/hide "Wróć do bieżącego tematu" button
+      function updateBackButton(nodeId) {
+        const backBtn = document.getElementById('kg-back-to-topic');
+        if (!backBtn || articleNodes.length === 0) return;
+
+        // Show button if viewing a node that's NOT in article nodes
+        if (nodeId && !articleNodes.includes(nodeId)) {
+          backBtn.style.display = '';
+        } else {
+          backBtn.style.display = 'none';
+        }
+      }
+
+    // Helper to get node by ID
+    const byId = Object.fromEntries(DATA.nodes.map(n => [n.id, n]));
+
+    // Week colors
+    const WC = [null, '#e2b46b', '#d4876a', '#a3b07e', '#93a6bf'];
+    const WN = [null, 'Fundamenty', 'Pamięć', 'Przetwarzanie', 'Praktyka'];
+
+    // Get node color
+    function nodeCol(n) {
+      return n.kind === 'person' ? '#8a7f72' : WC[n.week];
+    }
+
+    // Build adjacency for relationships
+    const adj = {};
+    DATA.nodes.forEach(n => adj[n.id] = []);
+    DATA.edges.forEach(e => {
+      adj[e.source].push({e, other:byId[e.target], dir:'out'});
+      adj[e.target].push({e, other:byId[e.source], dir:'in'});
+    });
+
+    // Update sidebar content
+    function updateSidebar(nodeId) {
+      const n = nodeId ? byId[nodeId] : null;
+
+      if (!n) {
+        // Overview
+        sidebar.innerHTML = `
+          <div class="knowledge-graph-sidebar-section">
+            <span class="knowledge-graph-sidebar-kicker">Przegląd</span>
+            <h3>Cały kurs</h3>
+            <p>20 terminów w czterech działach, pojęcia pomocnicze i badacze. Wybierz węzeł, aby zobaczyć szczegóły.</p>
+          </div>
+          <div class="knowledge-graph-article-list">
+            <span class="knowledge-graph-relationships-header">W tym artykule</span>
+            ${articleNodes.map(id => {
+              const node = byId[id];
+              if (!node) return '';
+              return `<button class="knowledge-graph-article-btn ${id === nodeId ? 'active' : ''}" data-node="${id}">
+                <span class="knowledge-graph-article-dot"></span>${node.label}
+              </button>`;
+            }).join('')}
+          </div>
+        `;
+      } else {
+        // Node details
+        const isArticle = articleNodes.includes(n.id);
+        const kind = {term: 'Termin kursu', concept: 'Pojęcie pomocnicze', person: 'Badacz'}[n.kind];
+        const color = nodeCol(n);
+
+        const relationships = adj[n.id] || [];
+        const outRels = relationships.filter(a => a.dir === 'out').map(a => ({
+          label: a.e.relation + ' →',
+          target: a.other.label,
+          targetId: a.other.id,
+          color: nodeCol(a.other),
+          inferred: a.e.basis === 'inferred'
+        }));
+        const inRels = relationships.filter(a => a.dir === 'in').map(a => ({
+          label: '← ' + a.e.relation,
+          target: a.other.label,
+          targetId: a.other.id,
+          color: nodeCol(a.other),
+          inferred: a.e.basis === 'inferred'
+        }));
+        const allRels = [...outRels, ...inRels];
+
+        sidebar.innerHTML = `
+          <div class="knowledge-graph-sidebar-section">
+            <span class="knowledge-graph-sidebar-kicker">${isArticle ? 'Temat artykułu' : 'Wybrany węzeł'}</span>
+            <h3>${n.label}</h3>
+            <div class="knowledge-graph-sidebar-tags">
+              <span class="knowledge-graph-tag">
+                <span class="knowledge-graph-tag-dot" style="background: ${color}"></span>${kind}
+              </span>
+              ${n.kind !== 'person' ? `<span class="knowledge-graph-tag">${WN[n.week]}</span>` : ''}
+            </div>
+          </div>
+          <p>${n.summary}</p>
+          ${n.example ? `
+            <div class="knowledge-graph-example">
+              <span class="knowledge-graph-example-label">Przykład</span>
+              <p>${n.example}</p>
+            </div>
+          ` : ''}
+          ${allRels.length > 0 ? `
+            <div class="knowledge-graph-relationships">
+              <span class="knowledge-graph-relationships-header">Powiązania</span>
+              ${allRels.map(r => `
+                <button class="knowledge-graph-rel-btn" data-node="${r.targetId}">
+                  <span class="knowledge-graph-rel-label">${r.label}${r.inferred ? ' · wnioskowane' : ''}</span>
+                  <span class="knowledge-graph-rel-target">
+                    <span class="knowledge-graph-rel-dot" style="background: ${r.color}"></span>${r.target}
+                  </span>
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+          <div class="knowledge-graph-article-list">
+            <span class="knowledge-graph-relationships-header">W tym artykule</span>
+            ${articleNodes.map(id => {
+              const node = byId[id];
+              if (!node) return '';
+              return `<button class="knowledge-graph-article-btn ${id === nodeId ? 'active' : ''}" data-node="${id}">
+                <span class="knowledge-graph-article-dot"></span>${node.label}
+              </button>`;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      // Add click handlers
+      sidebar.querySelectorAll('[data-node]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          graph.select(btn.dataset.node);
+        });
+      });
+    }
+
+    // Filter button handlers
+    let weeks = new Set([1, 2, 3, 4]);
+    let people = true;
+    let inferred = true;
+
+    document.querySelectorAll('.knowledge-graph-week-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const week = parseInt(btn.id.split('-')[2]);
+        if (weeks.has(week)) {
+          weeks.delete(week);
+          btn.setAttribute('aria-pressed', 'false');
+        } else {
+          weeks.add(week);
+          btn.setAttribute('aria-pressed', 'true');
+        }
+        graph.setFilter({ weeks, people, inferred });
+      });
+    });
+
+    document.getElementById('kg-people').addEventListener('click', (e) => {
+      people = !people;
+      e.currentTarget.setAttribute('aria-pressed', String(people));
+      graph.setFilter({ weeks, people, inferred });
+    });
+
+    document.getElementById('kg-inferred').addEventListener('click', (e) => {
+      inferred = !inferred;
+      e.currentTarget.setAttribute('aria-pressed', String(inferred));
+      graph.setFilter({ weeks, people, inferred });
+    });
+
+    // Zoom controls
+    document.getElementById('kg-zoom-in').addEventListener('click', () => {
+      graph.zoom(1.25);
+    });
+
+    document.getElementById('kg-zoom-out').addEventListener('click', () => {
+      graph.zoom(0.8);
+    });
+
+    document.getElementById('kg-back-to-topic').addEventListener('click', () => {
+      if (articleNodes.length > 0) {
+        graph.select(articleNodes[0]);
+        updateSidebar(articleNodes[0]);
+      }
+    });
+
+    document.getElementById('kg-overview').addEventListener('click', () => {
+      graph.select(null);
+      updateSidebar(null);
+      updateBackButton(null);
+    });
+
+    // Initial sidebar update
+    updateSidebar(articleNodes[0] || null);
+
+    } catch (error) {
+      console.error('ERROR loading knowledge graph:', error);
+      console.error('Error stack:', error.stack);
+
+      // Show error message in sidebar
+      const sidebar = document.getElementById('kg-sidebar');
+      if (sidebar) {
+        sidebar.innerHTML = `
+          <div class="hint" style="color: #ff6b6b;">
+            <h2>Graf wiedzy jest chwilowo niedostępny</h2>
+            <p>Wystąpił błąd podczas ładowania grafu wiedzy. Sprawdź konsolę przeglądarki, aby uzyskać więcej informacji.</p>
+          </div>
+        `;
+      }
+    }
+  </script>
 {% endblock %}

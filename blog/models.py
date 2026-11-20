@@ -21,6 +21,12 @@ class BlogPost(models.Model):
         'BlogCategory', on_delete=models.SET_NULL, null=True, blank=True, related_name='posts'
     )
     order = models.PositiveSmallIntegerField(default=0, help_text="Position within its category")
+    article_nodes = models.CharField(
+        max_length=500,
+        blank=True,
+        default='',
+        help_text='Węzły grafu wiedzy do podświetlenia (ID oddzielone przecinkami, np. "mindset, persistence, dweck")'
+    )
 
     class Meta:
         ordering = ['-published_at', '-created_at']

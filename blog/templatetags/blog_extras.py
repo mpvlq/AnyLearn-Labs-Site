@@ -1,4 +1,5 @@
 from django import template
+import json
 
 register = template.Library()
 
@@ -23,3 +24,12 @@ LOCATIVE = {1: 'jednym', 2: 'dwóch', 3: 'trzech', 4: 'czterech', 5: 'pięciu',
 def pl_locative(count):
     """Number as a Polish locative word: {{ 4|pl_locative }} -> "czterech" (digits above ten)"""
     return LOCATIVE.get(int(count), count)
+
+
+@register.filter
+def to_js_array(value):
+    """Convert comma-separated string to JavaScript array"""
+    if not value:
+        return '[]'
+    ids = [s.strip() for s in value.split(',') if s.strip()]
+    return json.dumps(ids)

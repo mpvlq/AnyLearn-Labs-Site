@@ -1,0 +1,473 @@
+// Knowledge Graph - Full 3D Implementation
+// Using properly encoded JSON data
+
+export const DATA = {
+  "nodes": [
+    {"id": "mindset", "label": "Mindset", "kind": "term", "day": 4, "week": 1, "summary": "Placeholder", "example": ""},
+    {"id": "persistence", "label": "Persistence", "kind": "concept", "day": 4, "week": 1, "summary": "Placeholder", "example": ""},
+    {"id": "dweck", "label": "Carol Dweck", "kind": "person", "day": null, "week": 1, "summary": "Placeholder", "example": ""}
+  ],
+  "edges": [
+    {"source": "mindset", "relation": "predicts", "target": "persistence", "basis": "stated"},
+    {"source": "dweck", "relation": "author", "target": "mindset", "basis": "stated"}
+  ]
+};
+
+export function createGraph(canvas, options = {}, dataOverride = null) {
+  const DATA = dataOverride || exports.DATA;
+  const { focus = [], initial = null, onSelect = null } = options;
+
+  console.log('createGraph: Initializing with', DATA.nodes.length, 'nodes');
+
+  const ctx = canvas.getContext('2d');
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const nodes = DATA.nodes.map(n => ({...n, x:0, y:0, z:0, vx:0, vy:0, vz:0, px:0, py:0, pz:0, ps:1, fire:0}));
+  const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
+  const edges = DATA.edges.map(e => ({...e, s: byId[e.source], t: byId[e.target]}));
+  const adj = {};
+  nodes.forEach(n => adj[n.id] = []);
+  edges.forEach(e => {
+    adj[e.s.id].push({e, other:e.t, dir:'out'});
+    adj[e.t.id].push({e, other:e.s, dir:'in'});
+  });
+
+  const R = n => n.kind==='term' ? 13 : n.kind==='concept' ? 8 : 5;
+  const topTerms = new Set(nodes.filter(n=>n.kind==='term').sort((a,b)=>adj[b.id].length-adj[a.id].length).slice(0,10).map(n=>n.id));
+  const wcol = w => css('--w'+w);
+  const hex2rgb = h => { h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)); };
+  const mixHex = (a,b,t) => { const A=hex2rgb(a),B=hex2rgb(b); return 'rgb('+A.map((v,i)=>Math.round(v*t+B[i]*(1-t))).join(',')+')'; };
+  const nodeCol = n => n.kind==='person' ? css('--person') : wcol(n.week);
+
+  let yaw=.6,pitch=.3,autoRot=true,rot=null;const CAM=1500;
+  let anim=null,fitK=1,W=0,H=0,dpr=1,view={x:0,y:0,k:1},alpha=1,sel=null,hover=null,drag=null,pan=null;
+  const filt = {weeks:new Set([1,2,3,4]), people:true, inferred:true};
+  let vis = [], vedges = [];
+  const focusIds = new Set(focus); // Store article nodes for marking
+
+  // Seed: each week gets one corner of a tetrahedron
+  const TETRA=[[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]];
+  const anchor = w => TETRA[w-1].map(v=>v*250);
+  nodes.filter(n=>n.kind==='term').forEach(n=>{
+    const a=anchor(n.week);
+    n.x=a[0]+(Math.random()-.5)*120;
+    n.y=a[1]+(Math.random()-.5)*120;
+    n.z=a[2]+(Math.random()-.5)*120;
+  });
+  nodes.filter(n=>n.kind!=='term').forEach(n=>{
+    const nb=adj[n.id].map(a=>a.other).find(o=>o.kind==='term')||{x:0,y:0,z:0};
+    n.x=nb.x+(Math.random()-.5)*100;
+    n.y=nb.y+(Math.random()-.5)*100;
+    n.z=nb.z+(Math.random()-.5)*100;
+  });
+
+  function applyFilter(){
+    vis = nodes.filter(n => n.kind==='person' ? false : filt.weeks.has(n.week));
+    const ids = new Set(vis.map(n=>n.id));
+    if(filt.people) nodes.filter(n=>n.kind==='person').forEach(p=>{ if(adj[p.id].some(a=>ids.has(a.other.id))) vis.push(p); });
+    const vs = new Set(vis.map(n=>n.id));
+    vedges = edges.filter(e => vs.has(e.s.id) && vs.has(e.t.id) && (filt.inferred || e.basis==='stated'));
+    if(sel && !vs.has(sel.id)) sel=null;
+    alpha=Math.max(alpha,.6);
+    renderPanel();
+  }
+
+  function tick(){
+    const a=alpha; if(a<0.002) return;
+    for(let i=0;i<vis.length;i++){
+      const p=vis[i];
+      for(let j=i+1;j<vis.length;j++){
+        const q=vis[j];
+        let dx=p.x-q.x,dy=p.y-q.y,dz=p.z-q.z,d2=dx*dx+dy*dy+dz*dz+.01,d=Math.sqrt(d2);
+        const f=(p.kind==='person'||q.kind==='person'?1500:(p.kind==='term'&&q.kind==='term'?14000:5200))/d2*a;
+        dx/=d;dy/=d;dz/=d;
+        p.vx+=dx*f;p.vy+=dy*f;p.vz+=dz*f;q.vx-=dx*f;q.vy-=dy*f;q.vz-=dz*f;
+        const m=R(p)+R(q)+26;
+        if(d<m){const o=(m-d)*.06;p.vx+=dx*o;p.vy+=dy*o;p.vz+=dz*o;q.vx-=dx*o;q.vy-=dy*o;q.vz-=dz*o;}
+      }
+      const [ax,ay,az]=anchor(p.week);
+      const g=p.kind==='term'?.02:.004;
+      p.vx+=(ax-p.x)*g*a; p.vy+=(ay-p.y)*g*a; p.vz+=(az-p.z)*g*a;
+      p.vx-=p.x*.003*a; p.vy-=p.y*.003*a; p.vz-=p.z*.003*a;
+    }
+    vedges.forEach(e=>{
+      const dx=e.t.x-e.s.x,dy=e.t.y-e.s.y,dz=e.t.z-e.s.z,d=Math.sqrt(dx*dx+dy*dy+dz*dz)||1;
+      const L=e.s.kind==='person'?90:(e.s.kind==='term'&&e.t.kind==='term'?190:115);
+      const f=(d-L)*.05*a;
+      const fx=dx/d*f,fy=dy/d*f,fz=dz/d*f;
+      e.s.vx+=fx;e.s.vy+=fy;e.s.vz+=fz;e.t.vx-=fx;e.t.vy-=fy;e.t.vz-=fz;
+    });
+    vis.forEach(n=>{ if(n===drag) return; n.vx*=.82;n.vy*=.82;n.vz*=.82;n.x+=n.vx;n.y+=n.vy;n.z+=n.vz;});
+    alpha*=.985;
+  }
+
+  function project(){
+    const cy=Math.cos(yaw),sy3=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    vis.forEach(n=>{
+      const x1=n.x*cy+n.z*sy3,z1=-n.x*sy3+n.z*cy,y2=n.y*cp-z1*sp,z2=n.y*sp+z1*cp;
+      n.pz=z2;n.ps=CAM/(CAM+z2);n.px=x1*n.ps;n.py=y2*n.ps;
+    });
+  }
+
+  function fitTarget(){
+    if(!vis.length||!W) return null;
+    const ds=vis.map(n=>Math.hypot(n.x,n.y,n.z)).sort((a,b)=>a-b);
+    let rm=Math.max(60,ds[Math.floor(ds.length*.9)]||60);
+    rm=Math.min(rm,CAM*.6);
+    const k=Math.min(2,1.3*(Math.min(W*.85,H)/2-20)/(rm*CAM/(CAM-rm)));
+    return {k, x:W/2, y:H/2};
+  }
+
+  function fit(){
+    const t=fitTarget();
+    if(t){view=t; fitK=t.k;}
+  }
+
+  function fitAnim(){
+    const t=fitTarget();
+    if(t){fitK=t.k; animateTo(t);}
+  }
+
+  function animateTo(t){
+    const f={...view},t0=performance.now(),D=800; anim=t0;
+    (function step(now){
+      if(anim!==t0) return;
+      const p=Math.min(1,(now-t0)/D);
+      // Smooth ease-in-out cubic
+      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      view.k=f.k+(t.k-f.k)*e; view.x=f.x+(t.x-f.x)*e; view.y=f.y+(t.y-f.y)*e;
+      if(p<1) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function focusOn(n){
+    project();
+    const ids=new Set(vis.map(v=>v.id)), pts=[n,...adj[n.id].map(a=>a.other).filter(o=>ids.has(o.id))];
+    let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+    pts.forEach(o=>{x0=Math.min(x0,o.px);x1=Math.max(x1,o.px);y0=Math.min(y0,o.py);y1=Math.max(y1,o.py);});
+    let k=Math.min((W-140)/(x1-x0+1),(H-140)/(y1-y0+1));
+    k=Math.min(2.6,Math.max(fitK*1.15,k));
+    animateTo({k, x:W/2-(x0+x1)/2*k, y:H/2-(y0+y1)/2*k});
+  }
+
+  const sxn = n => n.px*view.k+view.x, syn = n => n.py*view.k+view.y, rr = n => R(n)*Math.max(view.k,.6)*n.ps;
+  function neighbors(n){ const s=new Set([n.id]); adj[n.id].forEach(a=>s.add(a.other.id)); return s; }
+
+  function draw(){
+    project();
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+    const focus = sel||hover, near = focus?neighbors(focus):null;
+    let smin=1e9,smax=-1e9; vis.forEach(n=>{smin=Math.min(smin,n.ps);smax=Math.max(smax,n.ps);});
+    const da = n => .42+.58*(n.ps-smin)/((smax-smin)||1);
+    ctx.lineWidth=1;
+    const edgeGrey=css('--edge'), wcs=[0,1,2,3,4].map(w=>w?css('--w'+w):''), perCol=css('--person'), edgeCol={};
+    const dark=hex2rgb(css('--bg')).reduce((a,b)=>a+b,0)<300;
+
+    // Draw pulses
+    pulses.forEach(p=>{
+      const A=p.from,B=p.to,t=p.t,e1=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,t0=Math.max(0,e1-.2),
+            ax=sxn(A),ay=syn(A),bx=sxn(B),by=syn(B);
+      const x=ax+(bx-ax)*e1,y=ay+(by-ay)*e1,x0=ax+(bx-ax)*t0,y0=ay+(by-ay)*t0,
+            sc=A.ps+(B.ps-A.ps)*e1,a=Math.min(1,t*8,(1-t)*3);
+      let c=hex2rgb(nodeCol(A)); if(dark) c=c.map(v=>Math.round(v+(255-v)*.55));
+      ctx.globalAlpha=a*.55; ctx.strokeStyle='rgba('+c+',.55)'; ctx.lineWidth=2*sc; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x,y); ctx.stroke(); ctx.lineCap='butt';
+      ctx.globalAlpha=a;
+      const g=ctx.createRadialGradient(x,y,0,x,y,9*sc);
+      g.addColorStop(0,'rgba('+c+',.95)'); g.addColorStop(.35,'rgba('+c+',.4)'); g.addColorStop(1,'rgba('+c+',0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,9*sc,0,7); ctx.fill();
+    });
+
+    // Draw edges
+    vedges.forEach(e=>{
+      const on = focus && (e.s===focus||e.t===focus), dep=(da(e.s)+da(e.t))/2;
+      ctx.globalAlpha = (focus ? (on?1:.08) : (e.s.kind==='person'?.45:.85)) * (on?1:(.4+.6*dep));
+      const bk=e.s.kind==='person'?'p':e.s.week;
+      ctx.strokeStyle = on ? nodeCol(focus) : (edgeCol[bk]||(edgeCol[bk]=mixHex(bk==='p'?perCol:wcs[bk],edgeGrey,.5)));
+      ctx.lineWidth = (on?2:1)*((e.s.ps+e.t.ps)/2);
+      ctx.setLineDash(e.basis==='inferred'?[5,4]:[]);
+      const x1=sxn(e.s),y1=syn(e.s),x2=sxn(e.t),y2=syn(e.t);
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+      const d=Math.hypot(x2-x1,y2-y1)||1, r=rr(e.t)+3, ux=(x2-x1)/d, uy=(y2-y1)/d,
+            ah=5.25*e.t.ps*Math.min(2.3,Math.max(1,view.k/fitK))*(on?1.15:1);
+      if(on){
+        ctx.setLineDash([]);ctx.fillStyle=ctx.strokeStyle;ctx.beginPath();
+        const tx=x2-ux*r,ty=y2-uy*r;
+        ctx.moveTo(tx,ty);
+        ctx.lineTo(tx-ux*ah-uy*ah/2,ty-uy*ah+ux*ah/2);
+        ctx.lineTo(tx-ux*ah+uy*ah/2,ty-uy*ah-ux*ah/2);
+        ctx.fill();
+      }
+      if(on&&sel){
+        ctx.setLineDash([]);ctx.globalAlpha=1;ctx.font='11px '+css('--body');
+        const mx=(x1+x2)/2,my=(y1+y2)/2,tw=ctx.measureText(e.relation).width;
+        ctx.fillStyle=css('--surface');ctx.fillRect(mx-tw/2-3,my-8,tw+6,16);
+        ctx.fillStyle=css('--ink');ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(e.relation,mx,my);
+      }
+    });
+
+    ctx.setLineDash([]);
+    const LAB=[];
+    [...vis].sort((a,b)=>b.pz-a.pz).forEach(n=>{
+      const dim = (focus && !near.has(n.id));
+      const f=n.fire||0, x=sxn(n),y=syn(n),r=rr(n)*(1+.16*f), c=nodeCol(n);
+      ctx.globalAlpha = dim?.15:(.76+.24*(n.ps-smin)/((smax-smin)||1));
+
+      // Soft halo around the node
+      {
+        const [cr,cg,cb]=hex2rgb(c), hr=r*(2.3+1.2*f), gr=ctx.createRadialGradient(x,y,r*.6,x,y,hr),
+              pa=(n.kind==='person'?.08:.17)+.4*f;
+        gr.addColorStop(0,'rgba('+cr+','+cg+','+cb+','+pa+')');
+        gr.addColorStop(1,'rgba('+cr+','+cg+','+cb+',0)');
+        ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(x,y,hr,0,7); ctx.fill();
+      }
+
+      ctx.beginPath();ctx.arc(x,y,r,0,7);
+      if(n.kind==='person'){
+        ctx.fillStyle=css('--surface');ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();
+      }
+      else{
+        ctx.fillStyle=c;ctx.fill();
+        if(n.kind==='concept'){ctx.strokeStyle=css('--surface');ctx.lineWidth=1.5;ctx.stroke();}
+      }
+      if(f>.01&&!dim){ctx.fillStyle='rgba(255,255,255,'+(.6*f)+')';ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();}
+      if(n===sel){
+        ctx.globalAlpha=1;ctx.strokeStyle=css('--ink');ctx.lineWidth=2.5;
+        ctx.beginPath();ctx.arc(x,y,r+4,0,7);ctx.stroke();
+      }
+      // Mark article nodes with dashed outline
+      if(focusIds.has(n.id) && n!==sel){
+        ctx.globalAlpha=dim?.25:.7;ctx.strokeStyle=css('--ink');ctx.lineWidth=2;
+        ctx.setLineDash([5,4]);
+        ctx.beginPath();ctx.arc(x,y,r+4,0,7);ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Labels
+      const inView = x>-20&&x<W+20&&y>-20&&y<H+20; let forced=false, pr=null;
+      if(sel){ if(near.has(n.id)){forced=true;} else if(inView) pr=n.kind==='term'?0:n.kind==='concept'?1:2; }
+      else if(hover&&!rot&&!pan){ if(near.has(n.id)) forced=true; }
+      else if(!sel&&!hover){ // Overview mode: show important labels
+        if(focusIds.has(n.id)||topTerms.has(n.id)){forced=true;}
+      }
+      if(forced||pr!==null) LAB.push({n,x,y,r,dim,forced,a:da(n),pr:n===sel?-2:forced?-1:pr});
+    });
+
+    // Label placement
+    LAB.sort((a,b)=>a.pr-b.pr||adj[b.n.id].length-adj[a.n.id].length||b.n.ps-a.n.ps);
+    const placed=[];
+    LAB.forEach(L=>{
+      ctx.font=(L.n.kind==='term'?(W<500?'600 11px ':'600 12.5px '):(W<500?'10px ':'11px '))+css('--body');
+      ctx.textAlign='center';ctx.textBaseline='top';
+      const w=ctx.measureText(L.n.label).width+10,h=16,rx=L.x-w/2,base=L.y+L.r+3;
+      const tries=L.forced?[base,base+15,base+30,L.y-L.r-19]:[base]; let ry=null;
+      for(const t of tries){ if(!placed.some(p=>rx<p.x+p.w&&rx+w>p.x&&t<p.y+p.h&&t+h>p.y)){ry=t;break;} }
+      if(ry===null){ if(!L.forced) return; ry=base; }
+      placed.push({x:rx,y:ry,w,h});ctx.globalAlpha=L.dim?.2:(.65+.35*L.a);
+      ctx.lineWidth=3;ctx.strokeStyle=css('--bg');ctx.strokeText(L.n.label,L.x,ry);
+      ctx.fillStyle=css('--ink');ctx.fillText(L.n.label,L.x,ry);
+    });
+    ctx.globalAlpha=1;
+  }
+
+  function resize(){
+    const r=canvas.getBoundingClientRect();
+    dpr=window.devicePixelRatio||1;
+    W=r.width;
+    H=r.height;
+    canvas.width=W*dpr;
+    canvas.height=H*dpr;
+  }
+
+  function hit(mx,my){
+    let best=null,bd=1e9;
+    vis.forEach(n=>{
+      const d=Math.hypot(sxn(n)-mx,syn(n)-my),r=rr(n)+6;
+      if(d<r&&n.pz<bd){best=n;bd=n.pz;}
+    });
+    return best;
+  }
+
+  function nearModel(mx,my,th=18){
+    for(const n of vis){ if(Math.hypot(sxn(n)-mx,syn(n)-my)-rr(n)<=th) return true; }
+    for(const e of vedges){
+      const x1=sxn(e.s),y1=syn(e.s),x2=sxn(e.t),y2=syn(e.t),dx=x2-x1,dy=y2-y1,l2=dx*dx+dy*dy||1;
+      const t=Math.max(0,Math.min(1,((mx-x1)*dx+(my-y1)*dy)/l2));
+      if(Math.hypot(mx-(x1+t*dx),my-(y1+t*dy))<=th) return true;
+    }
+    return false;
+  }
+
+  function pos(ev){const r=canvas.getBoundingClientRect();return [ev.clientX-r.left,ev.clientY-r.top];}
+  let moved=false,mouse=null;
+
+  function toWorld(n,mx,my){
+    const x1=(mx-view.x)/view.k/n.ps,y2=(my-view.y)/view.k/n.ps,z2=n.pz,
+          cy=Math.cos(yaw),sy3=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    const y=y2*cp+z2*sp,z1=-y2*sp+z2*cp;
+    n.x=x1*cy-z1*sy3; n.z=x1*sy3+z1*cy; n.y=y;
+  }
+
+  canvas.addEventListener('contextmenu',ev=>ev.preventDefault());
+  canvas.addEventListener('pointerdown',ev=>{
+    canvas.setPointerCapture(ev.pointerId);
+    const [mx,my]=pos(ev);moved=false;anim=null;const n=hit(mx,my);
+    if(n){drag=n;}
+    else if(!ev.shiftKey&&ev.button!==2&&nearModel(mx,my)){
+      rot={x:ev.clientX,y:ev.clientY,yaw,pitch};canvas.style.cursor='grabbing';
+    }
+    else{pan={x:ev.clientX,y:ev.clientY,vx:view.x,vy:view.y};canvas.style.cursor='move';}
+  });
+
+  canvas.addEventListener('pointermove',ev=>{
+    const [mx,my]=pos(ev);mouse=[mx,my];
+    if(drag){
+      moved=true;toWorld(drag,mx,my);drag.vx=drag.vy=drag.vz=0;alpha=Math.max(alpha,.3);
+    }
+    else if(rot){
+      if(Math.abs(ev.clientX-rot.x)+Math.abs(ev.clientY-rot.y)>3)moved=true;
+      yaw=rot.yaw+(ev.clientX-rot.x)*.008;
+      pitch=Math.max(-1.4,Math.min(1.4,rot.pitch+(ev.clientY-rot.y)*.008));
+    }
+    else if(pan){
+      if(Math.abs(ev.clientX-pan.x)+Math.abs(ev.clientY-pan.y)>3)moved=true;
+      view.x=pan.vx+ev.clientX-pan.x;view.y=pan.vy+ev.clientY-pan.y;
+    }
+    else{
+      const h=hit(mx,my);if(h!==hover)hover=h;
+      canvas.style.cursor=h?'pointer':nearModel(mx,my)?'grab':'move';
+    }
+  });
+
+  canvas.addEventListener('pointerup',ev=>{
+    if(!moved){const [mx,my]=pos(ev);const n=hit(mx,my);select(n,false);}
+    drag=null;pan=null;rot=null;canvas.style.cursor='';
+    if(ev.pointerType==='touch')mouse=null;
+  });
+
+  canvas.addEventListener('pointerleave',()=>{mouse=null;hover=null;});
+  canvas.addEventListener('wheel',ev=>{
+    ev.preventDefault();
+    zoomAt(ev.deltaY<0?1.12:1/1.12,...pos(ev));
+  },{passive:false});
+
+  function zoomAt(f,mx,my){
+    anim=null;
+    const k=Math.min(3,Math.max(.3,view.k*f));
+    view.x=mx-(mx-view.x)*k/view.k;
+    view.y=my-(my-view.y)*k/view.k;
+    view.k=k;
+  }
+
+  function select(n,noAnim){
+    sel=n;
+    renderPanel();
+    if(onSelect) onSelect(n ? n.id : null);
+    // Always animate unless explicitly disabled
+    if(!noAnim){
+      n?focusOn(n):fitAnim();
+    }
+  }
+
+  function esc(s){
+    return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+
+  function renderPanel(){
+    const p=document.getElementById('kg-sidebar');
+    if(!p) return;
+
+    if(!sel){
+      const terms=nodes.filter(n=>n.kind==='term');
+      p.innerHTML='<div class="hint"><h2>Wybierz węzeł</h2><p>Dotknij dowolnego węzła, aby zobaczyć definicję, przykład i wszystkie powiązania.</p></div>'+
+        [1,2,3,4].map(w=>'<h3 style="color:'+wcol(w)+'">Tydzień '+w+'</h3><ul>'+terms.filter(t=>t.week===w).map(t=>'<li><button data-id="'+t.id+'">Dzień '+t.day+' · '+esc(t.label)+'</button></li>').join('')+'</ul>').join('');
+    } else {
+      const n=sel, out=adj[n.id].filter(a=>a.dir==='out'), inn=adj[n.id].filter(a=>a.dir==='in');
+      const vs=new Set(vedges);
+      const row=(a,o)=>{
+        if(!vs.has(a.e)) return '';
+        const inf=a.e.basis==='inferred'?'<span class="inf">wnioskowane</span>':'';
+        return '<li><button data-id="'+a.other.id+'">'+(o?'<span class="r">'+esc(a.e.relation)+'</span> → ':'← <span class="r">'+esc(a.e.relation)+'</span> ')+esc(a.other.label)+inf+'</button></li>';
+      };
+      const ro=out.map(a=>row(a,true)).join(''), ri=inn.map(a=>row(a,false)).join('');
+      p.innerHTML='<h2>'+esc(n.label)+'</h2><span class="tag" style="color:'+nodeCol(n)+';border-color:'+nodeCol(n)+'">'+({term:'Termin kursu',concept:'Pojęcie pomocnicze',person:'Badacz'}[n.kind])+'</span>'+
+        (n.day?'<span class="tag">Dzień '+n.day+'</span>':'')+(n.kind!=='person'?'<span class="tag">Tydzień '+n.week+'</span>':'')+
+        '<p>'+esc(n.summary)+'</p>'+(n.example?'<div class="ex">'+esc(n.example)+'</div>':'')+
+        (ro?'<h3>Łączy się z</h3><ul>'+ro+'</ul>':'')+(ri?'<h3>Połączone od</h3><ul>'+ri+'</ul>':'')+
+        '<h3></h3><ul><li><button data-id="">Wróć do przeglądu</button></li></ul>';
+    }
+    p.querySelectorAll('button[data-id]').forEach(b=>b.onclick=()=>select(b.dataset.id?byId[b.dataset.id]:null));
+    p.scrollTop=0;
+  }
+
+  // Firing neurons animation
+  const calm = !!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  let pulses=[], nextFire=performance.now()+700, lastT=performance.now();
+
+  function fireNode(n,gen){
+    n.fire=1; if(gen>=3) return;
+    const es=vedges.filter(e=>e.s===n||e.t===n).sort(()=>Math.random()-.5),
+          k=Math.min(es.length,1+Math.floor(Math.random()*3));
+    for(let i=0;i<k;i++){
+      const e=es[i];
+      pulses.push({e,from:n,to:e.s===n?e.t:e.s,t:0,dur:650+Math.random()*550,gen});
+    }
+  }
+
+  function stepFx(now){
+    const dt=Math.min(60,now-lastT); lastT=now;
+    if(!calm && now>=nextFire && vis.length){
+      fireNode(vis[Math.floor(Math.random()*vis.length)],0);
+      nextFire=now+450+Math.random()*1200;
+    }
+    nodes.forEach(n=>{ if(n.fire>0) n.fire=Math.max(0,n.fire-dt/950); });
+    pulses=pulses.filter(p=>{
+      p.t+=dt/p.dur;
+      if(p.t>=1){
+        if(vis.includes(p.to)&&Math.random()<.72-.2*p.gen) fireNode(p.to,p.gen+1);
+        return false;
+      }
+      return vedges.includes(p.e);
+    });
+  }
+
+  function loop(){
+    tick();
+    stepFx(performance.now());
+    if(autoRot&&!sel&&!drag&&!rot&&!pan)yaw+=.0028;
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize',()=>{resize();});
+  resize();
+  applyFilter();
+
+  for(let i=0;i<500;i++) tick();
+  alpha=.02;
+  fit();
+  renderPanel();
+
+  if(initial && byId[initial]){
+    setTimeout(() => select(byId[initial]), 100);
+  }
+
+  requestAnimationFrame(loop);
+
+  return {
+    select: (id) => select(id ? byId[id] : null),
+    setArticle: (ids) => {
+      console.log('setArticle called with:', ids);
+    },
+    setFilter: (f) => {
+      if(f.weeks !== undefined) filt.weeks = new Set(f.weeks);
+      if(f.people !== undefined) filt.people = f.people;
+      if(f.inferred !== undefined) filt.inferred = f.inferred;
+      applyFilter();
+    },
+    zoom: (factor) => zoomAt(factor, W/2, H/2),
+    destroy: () => {
+      console.log('Graph destroyed');
+    }
+  };
+}

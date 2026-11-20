@@ -1,0 +1,1314 @@
+{
+  "nodes": [
+    {
+      "id": "sdl",
+      "label": "Uczenie się samokierowane",
+      "kind": "term",
+      "day": 1,
+      "week": 1,
+      "summary": "Uczący się, a nie zewnętrzny autorytet, decyduje, czego się uczyć, jak i czy to zadziałało, korzystając z ludzi i materiałów jako wsparcia.",
+      "example": "Uczeń wyznacza ograniczony cel (24 terminy w miesiąc), wybiera codzienne lektury i koryguje plan, gdy drugi tydzień idzie słabo."
+    },
+    {
+      "id": "srl",
+      "label": "Uczenie się samoregulowane",
+      "kind": "term",
+      "day": 2,
+      "week": 1,
+      "summary": "Cykl Zimmermana: planowanie, wykonanie i samorefleksja; refleksja zasila kolejny plan.",
+      "example": "Uczeń odkłada telefon, gdy dekoncentruje się, a potem zauważa, że zmęczeniem tłumaczył coś, co wynikało z biernego powtarzania."
+    },
+    {
+      "id": "meta",
+      "label": "Metapoznanie",
+      "kind": "term",
+      "day": 3,
+      "week": 1,
+      "summary": "Świadomość i kontrola własnego myślenia: wiedza metapoznawcza oraz regulacja metapoznawcza.",
+      "example": "Uczeń zauważa, że tylko prześlizguje się po słowach, przypomina sobie, że parafrazowanie mu pomaga, i przepisuje akapit."
+    },
+    {
+      "id": "mindset",
+      "label": "Nastawienie rozwojowe a stałe",
+      "kind": "term",
+      "day": 4,
+      "week": 1,
+      "summary": "Stałe: zdolności to niezmienna cecha. Rozwojowe: zdolności rozwijają się dzięki wysiłkowi i strategiom, co sprzyja wytrwałości.",
+      "example": "Po nieudanej próbie wyjaśnienia efektu rozłożenia w czasie uczeń myśli „jeszcze tego nie zbudowałem” i próbuje znów jutro."
+    },
+    {
+      "id": "motiv",
+      "label": "Motywacja wewnętrzna a zewnętrzna",
+      "kind": "term",
+      "day": 5,
+      "week": 1,
+      "summary": "Teoria autodeterminacji: motywację wewnętrzną podtrzymują autonomia, kompetencja i więź z innymi; nagrody zewnętrzne mogą ją osłabiać.",
+      "example": "Kurs wybrany samodzielnie, widoczny postęp i rozmowy o terminach ze znajomym zaspokajają wszystkie trzy potrzeby."
+    },
+    {
+      "id": "test",
+      "label": "Efekt testowania",
+      "kind": "term",
+      "day": 7,
+      "week": 2,
+      "summary": "Przywoływanie informacji z pamięci wzmacnia ją skuteczniej niż ponowne uczenie się, nawet bez informacji zwrotnej.",
+      "example": "Uczeń zamyka książkę i przez pięć minut zapisuje wszystko, co pamięta o podwójnym kodowaniu."
+    },
+    {
+      "id": "space",
+      "label": "Efekt rozłożenia w czasie",
+      "kind": "term",
+      "day": 8,
+      "week": 2,
+      "summary": "Nauka rozłożona w czasie bije naukę skumulowaną; dobrze działają rosnące odstępy.",
+      "example": "Sześć półgodzinnych sesji rozłożonych na trzy tygodnie bije jedno trzygodzinne wkuwanie."
+    },
+    {
+      "id": "dd",
+      "label": "Pożądane trudności",
+      "kind": "term",
+      "day": 9,
+      "week": 2,
+      "summary": "Warunki, które spowalniają ćwiczenie, ale poprawiają długotrwałe zapamiętywanie i transfer, o ile uczący się poradzi sobie z wyzwaniem.",
+      "example": "Mieszanie nowych terminów ze starszymi sprawia, że ćwiczenie jest trudniejsze, ale pamięć jest lepsza."
+    },
+    {
+      "id": "illus",
+      "label": "Iluzja kompetencji",
+      "kind": "term",
+      "day": 10,
+      "week": 2,
+      "summary": "Branie znajomości lub płynności za wiedzę, którą naprawdę da się przywołać.",
+      "example": "Uczeń trzykrotnie czyta notatki o krzywej zapominania i je zakreśla, czuje się gotowy, a potem nie umie jej wyjaśnić na pustej kartce."
+    },
+    {
+      "id": "forget",
+      "label": "Krzywa zapominania",
+      "kind": "term",
+      "day": 11,
+      "week": 2,
+      "summary": "Pamięć zanika szybko, potem wolniej, o ile nie jest wzmacniana; każda powtórka spłaszcza kolejny spadek.",
+      "example": "Powtórka terminu we wtorek, w piątek i w kolejnym tygodniu utrzymuje go w pamięci kosztem kilku minut."
+    },
+    {
+      "id": "ei",
+      "label": "Pytania elaboracyjne",
+      "kind": "term",
+      "day": 13,
+      "week": 3,
+      "summary": "Zadawanie sobie pytania, dlaczego fakt jest prawdziwy lub jak łączy się z tym, co wiesz; działa najlepiej przy wcześniejszej wiedzy.",
+      "example": "Uczeń pyta, dlaczego przywoływanie pomaga bez informacji zwrotnej, i znajduje lukę we własnym rozumieniu."
+    },
+    {
+      "id": "dual",
+      "label": "Podwójne kodowanie",
+      "kind": "term",
+      "day": 14,
+      "week": 3,
+      "summary": "Przedstawienie informacji słowami i obrazem tworzy dwa powiązane ślady pamięciowe.",
+      "example": "Uczeń rysuje cykl Zimmermana jako pętlę z zegarem symbolizującym monitorowanie."
+    },
+    {
+      "id": "gen",
+      "label": "Efekt generowania",
+      "kind": "term",
+      "day": 15,
+      "week": 3,
+      "summary": "Informacje, które sam wytwarzasz, zapamiętujesz lepiej niż te, które tylko czytasz.",
+      "example": "Uczeń pisze własną definicję przeplatania, zanim porówna ją ze źródłem."
+    },
+    {
+      "id": "inter",
+      "label": "Przeplatanie",
+      "kind": "term",
+      "day": 16,
+      "week": 3,
+      "summary": "Mieszanie tematów lub typów zadań w jednej sesji buduje umiejętność rozróżniania i trwałą pamięć.",
+      "example": "Weekendowa sesja, w której uczeń miesza fiszki o rozłożeniu w czasie, przeplataniu i efekcie testowania."
+    },
+    {
+      "id": "clt",
+      "label": "Teoria obciążenia poznawczego",
+      "kind": "term",
+      "day": 17,
+      "week": 3,
+      "summary": "Pamięć robocza jest mała, więc zarządzaj obciążeniem wewnętrznym, ograniczaj zewnętrzne i wspieraj istotne.",
+      "example": "Uczeń lepiej uczy się pojęcia ze statystyki z jednego rozwiązanego przykładu, przy zamkniętych pozostałych kartach."
+    },
+    {
+      "id": "dp",
+      "label": "Praktyka celowa",
+      "kind": "term",
+      "day": 19,
+      "week": 4,
+      "summary": "Skupiona praktyka z informacją zwrotną na granicy własnych możliwości, wymierzona w słabe punkty; nie to samo co zwykłe powtarzanie.",
+      "example": "Uczeń ćwiczy terminy, które ciągle mu umykają, zamiast czytać ponownie te, które zna."
+    },
+    {
+      "id": "jol",
+      "label": "Oceny nauczenia się i kalibracja",
+      "kind": "term",
+      "day": 20,
+      "week": 4,
+      "summary": "Oceny tego, jak dobrze się czegoś nauczyłeś, i zgodność tych ocen z faktycznymi wynikami; zwykle przeceniamy siebie.",
+      "example": "Uczeń przewiduje 90% trafności, uzyskuje 65% i co tydzień śledzi tę lukę."
+    },
+    {
+      "id": "goal",
+      "label": "Teoria wyznaczania celów",
+      "kind": "term",
+      "day": 21,
+      "week": 4,
+      "summary": "Konkretne, ambitne, zaakceptowane cele z informacją zwrotną poprawiają wyniki; cele opanowania sprawdzają się lepiej niż wynikowe.",
+      "example": "„Umieć wyjaśnić każdy termin własnymi słowami” działa lepiej niż „zdobyć 100% w podsumowaniu”."
+    },
+    {
+      "id": "transfer",
+      "label": "Transfer uczenia się",
+      "kind": "term",
+      "day": 22,
+      "week": 4,
+      "summary": "Zastosowanie wiedzy w nowym kontekście; transfer bliski zdarza się często, daleki rzadko.",
+      "example": "Efekt rozłożenia w czasie pomaga uczniowi w nauce nowego słownictwa (transfer bliski), ale przebudowa przeglądów bezpieczeństwa w zespole (transfer daleki) wymaga świadomego wysiłku."
+    },
+    {
+      "id": "td",
+      "label": "Dyskontowanie czasowe",
+      "kind": "term",
+      "day": 23,
+      "week": 4,
+      "summary": "Przeceniamy natychmiastowe nagrody, co podważa samokontrolę; plany „jeśli–to” i wcześniejsze zobowiązanie temu przeciwdziałają.",
+      "example": "Plan „jeśli–to” po kolacji oraz blokada telefonu w godzinach 19–20."
+    },
+    {
+      "id": "forethought",
+      "label": "Faza planowania",
+      "kind": "concept",
+      "day": 2,
+      "week": 1,
+      "summary": "Faza 1 cyklu: analiza zadania, wyznaczanie celów, wybór strategii, odwołanie do motywacji.",
+      "example": ""
+    },
+    {
+      "id": "performance",
+      "label": "Faza wykonania",
+      "kind": "concept",
+      "day": 2,
+      "week": 1,
+      "summary": "Faza 2: wykonanie z samokontrolą i samoobserwacją.",
+      "example": ""
+    },
+    {
+      "id": "selfref",
+      "label": "Samorefleksja",
+      "kind": "concept",
+      "day": 2,
+      "week": 1,
+      "summary": "Faza 3: ocena wyniku, przypisanie przyczyn, reakcja; zasila kolejną fazę planowania.",
+      "example": ""
+    },
+    {
+      "id": "self_control",
+      "label": "Samokontrola",
+      "kind": "concept",
+      "day": 23,
+      "week": 4,
+      "summary": "Skupianie uwagi i opieranie się rozproszeniom; wykorzystywana w fazie wykonania.",
+      "example": ""
+    },
+    {
+      "id": "meta_know",
+      "label": "Wiedza metapoznawcza",
+      "kind": "concept",
+      "day": 3,
+      "week": 1,
+      "summary": "To, co wiesz o sobie jako uczącym się, o zadaniach i o strategiach.",
+      "example": ""
+    },
+    {
+      "id": "meta_reg",
+      "label": "Regulacja metapoznawcza",
+      "kind": "concept",
+      "day": 3,
+      "week": 1,
+      "summary": "Planowanie, monitorowanie i ocenianie własnego myślenia.",
+      "example": ""
+    },
+    {
+      "id": "persistence",
+      "label": "Wytrwałość",
+      "kind": "concept",
+      "day": 4,
+      "week": 1,
+      "summary": "Wytrwanie mimo trudności.",
+      "example": ""
+    },
+    {
+      "id": "autonomy",
+      "label": "Autonomia",
+      "kind": "concept",
+      "day": 5,
+      "week": 1,
+      "summary": "Poczucie wyboru i sprawstwa nad własnymi działaniami.",
+      "example": ""
+    },
+    {
+      "id": "competence",
+      "label": "Kompetencja",
+      "kind": "concept",
+      "day": 5,
+      "week": 1,
+      "summary": "Poczucie skuteczności i robienia postępów.",
+      "example": ""
+    },
+    {
+      "id": "relatedness",
+      "label": "Więź z innymi",
+      "kind": "concept",
+      "day": 5,
+      "week": 1,
+      "summary": "Poczucie więzi z innymi ludźmi.",
+      "example": ""
+    },
+    {
+      "id": "overjust",
+      "label": "Efekt nadmiernego uzasadnienia",
+      "kind": "concept",
+      "day": 5,
+      "week": 1,
+      "summary": "Namacalne nagrody za przyjemne zadanie mogą później osłabić zainteresowanie.",
+      "example": ""
+    },
+    {
+      "id": "fluency",
+      "label": "Płynność i znajomość",
+      "kind": "concept",
+      "day": 10,
+      "week": 2,
+      "summary": "Łatwość, z jaką tekst lub idee przepływają przez umysł; łatwo pomylić ją z wiedzą.",
+      "example": ""
+    },
+    {
+      "id": "prior_know",
+      "label": "Wiedza wcześniejsza",
+      "kind": "concept",
+      "day": 13,
+      "week": 3,
+      "summary": "Wiedza podstawowa, do której muszą się odwoływać techniki i trudności.",
+      "example": ""
+    },
+    {
+      "id": "encoding",
+      "label": "Głębsze kodowanie",
+      "kind": "concept",
+      "day": 13,
+      "week": 3,
+      "summary": "Bogatsze, lepiej połączone ślady pamięciowe.",
+      "example": ""
+    },
+    {
+      "id": "discrimination",
+      "label": "Rozróżnianie pojęć",
+      "kind": "concept",
+      "day": 16,
+      "week": 3,
+      "summary": "Odróżnianie podobnych zadań lub pojęć i dobór właściwego podejścia.",
+      "example": ""
+    },
+    {
+      "id": "working_mem",
+      "label": "Pamięć robocza",
+      "kind": "concept",
+      "day": 17,
+      "week": 3,
+      "summary": "Utrzymuje i przetwarza jednocześnie tylko kilka elementów.",
+      "example": ""
+    },
+    {
+      "id": "schema",
+      "label": "Schematy",
+      "kind": "concept",
+      "day": 17,
+      "week": 3,
+      "summary": "Zorganizowane struktury wiedzy w pamięci długotrwałej.",
+      "example": ""
+    },
+    {
+      "id": "intrinsic_load",
+      "label": "Obciążenie wewnętrzne",
+      "kind": "concept",
+      "day": 17,
+      "week": 3,
+      "summary": "Wewnętrzna złożoność materiału.",
+      "example": ""
+    },
+    {
+      "id": "extraneous_load",
+      "label": "Obciążenie zewnętrzne",
+      "kind": "concept",
+      "day": 17,
+      "week": 3,
+      "summary": "Obciążenie wynikające ze złej prezentacji lub zbędnych zadań; należy je ograniczać.",
+      "example": ""
+    },
+    {
+      "id": "germane_load",
+      "label": "Obciążenie istotne",
+      "kind": "concept",
+      "day": 17,
+      "week": 3,
+      "summary": "Wysiłek poświęcony budowaniu schematów; należy go wspierać.",
+      "example": ""
+    },
+    {
+      "id": "feedback",
+      "label": "Natychmiastowa informacja zwrotna",
+      "kind": "concept",
+      "day": 19,
+      "week": 4,
+      "summary": "Informacja zwrotna podczas ćwiczenia, która coś mówi o postępie.",
+      "example": ""
+    },
+    {
+      "id": "mere_rep",
+      "label": "Zwykłe powtarzanie",
+      "kind": "concept",
+      "day": 19,
+      "week": 4,
+      "summary": "Robienie tego samego na tym samym poziomie; utrzymuje, ale nie poprawia.",
+      "example": ""
+    },
+    {
+      "id": "dunning",
+      "label": "Efekt Dunninga-Krugera",
+      "kind": "concept",
+      "day": 20,
+      "week": 4,
+      "summary": "Osoby o niższych wynikach są najbardziej pewne siebie.",
+      "example": ""
+    },
+    {
+      "id": "mastery",
+      "label": "Cele opanowania",
+      "kind": "concept",
+      "day": 21,
+      "week": 4,
+      "summary": "Cele skupione na rozwijaniu kompetencji i rozumieniu.",
+      "example": ""
+    },
+    {
+      "id": "perfgoal",
+      "label": "Cele wynikowe",
+      "kind": "concept",
+      "day": 21,
+      "week": 4,
+      "summary": "Cele skupione na pokazaniu zdolności lub pokonaniu innych (dążenie lub unikanie).",
+      "example": ""
+    },
+    {
+      "id": "near",
+      "label": "Transfer bliski",
+      "kind": "concept",
+      "day": 22,
+      "week": 4,
+      "summary": "Zastosowanie wiedzy w podobnych sytuacjach.",
+      "example": ""
+    },
+    {
+      "id": "far",
+      "label": "Transfer daleki",
+      "kind": "concept",
+      "day": 22,
+      "week": 4,
+      "summary": "Zastosowanie wiedzy w bardzo odmiennych sytuacjach.",
+      "example": ""
+    },
+    {
+      "id": "hyperbolic",
+      "label": "Dyskontowanie hiperboliczne",
+      "kind": "concept",
+      "day": 23,
+      "week": 4,
+      "summary": "Wartość nagrody spada najszybciej przy krótkich opóźnieniach, co powoduje odwrócenia preferencji.",
+      "example": ""
+    },
+    {
+      "id": "delayed_grat",
+      "label": "Odroczenie gratyfikacji",
+      "kind": "concept",
+      "day": 23,
+      "week": 4,
+      "summary": "Pokrewna idea z badań z piankami (marshmallow).",
+      "example": ""
+    },
+    {
+      "id": "impl_int",
+      "label": "Intencje implementacyjne",
+      "kind": "concept",
+      "day": 23,
+      "week": 4,
+      "summary": "Plany „jeśli–to” łączące bodziec z działaniem.",
+      "example": ""
+    },
+    {
+      "id": "precommit",
+      "label": "Wcześniejsze zobowiązanie",
+      "kind": "concept",
+      "day": 23,
+      "week": 4,
+      "summary": "Utrudnienie lub uniemożliwienie kuszącej opcji z wyprzedzeniem.",
+      "example": ""
+    },
+    {
+      "id": "knowles",
+      "label": "Malcolm Knowles",
+      "kind": "person",
+      "day": null,
+      "week": 1,
+      "summary": "Klasyczne ujęcie uczenia się samokierowanego (1975).",
+      "example": ""
+    },
+    {
+      "id": "grow",
+      "label": "Gerald Grow",
+      "kind": "person",
+      "day": null,
+      "week": 1,
+      "summary": "Ujął samokierowanie jako umiejętność rozwijającą się etapami.",
+      "example": ""
+    },
+    {
+      "id": "zimmerman",
+      "label": "Barry Zimmerman",
+      "kind": "person",
+      "day": null,
+      "week": 1,
+      "summary": "Zdefiniował uczenie się samoregulowane i jego trzyfazowy cykl.",
+      "example": ""
+    },
+    {
+      "id": "flavell",
+      "label": "John Flavell",
+      "kind": "person",
+      "day": null,
+      "week": 1,
+      "summary": "Wprowadził pojęcie metapoznania w latach 70.",
+      "example": ""
+    },
+    {
+      "id": "dweck",
+      "label": "Carol Dweck",
+      "kind": "person",
+      "day": null,
+      "week": 1,
+      "summary": "Nastawienie rozwojowe a stałe; także literatura o celach osiągnięć.",
+      "example": ""
+    },
+    {
+      "id": "deci_ryan",
+      "label": "Edward Deci i Richard Ryan",
+      "kind": "person",
+      "day": null,
+      "week": 1,
+      "summary": "Teoria autodeterminacji.",
+      "example": ""
+    },
+    {
+      "id": "roediger",
+      "label": "Henry Roediger i Jeffrey Karpicke",
+      "kind": "person",
+      "day": null,
+      "week": 2,
+      "summary": "Badanie z 2006 r. o przywoływaniu, na którym opiera się efekt testowania.",
+      "example": ""
+    },
+    {
+      "id": "ebbinghaus",
+      "label": "Hermann Ebbinghaus",
+      "kind": "person",
+      "day": null,
+      "week": 2,
+      "summary": "Eksperymenty z pamięcią z lat 80. XIX w.: krzywa zapominania i efekt odstępów.",
+      "example": ""
+    },
+    {
+      "id": "cepeda",
+      "label": "Nicholas Cepeda",
+      "kind": "person",
+      "day": null,
+      "week": 2,
+      "summary": "Przegląd z 2006 r. potwierdzający efekt rozłożenia w czasie.",
+      "example": ""
+    },
+    {
+      "id": "bjork",
+      "label": "Robert Bjork",
+      "kind": "person",
+      "day": null,
+      "week": 2,
+      "summary": "Autor pojęcia pożądanych trudności.",
+      "example": ""
+    },
+    {
+      "id": "koriat",
+      "label": "Asher Koriat",
+      "kind": "person",
+      "day": null,
+      "week": 2,
+      "summary": "Badania nad nadmierną pewnością siebie i ocenami nauczenia się.",
+      "example": ""
+    },
+    {
+      "id": "metcalfe",
+      "label": "Janet Metcalfe",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Badania nad ocenami nauczenia się.",
+      "example": ""
+    },
+    {
+      "id": "pressley",
+      "label": "Michael Pressley",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Rozwinął pytania elaboracyjne w latach 80.",
+      "example": ""
+    },
+    {
+      "id": "dunlosky",
+      "label": "John Dunlosky",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Przegląd, który uznał pytania elaboracyjne za umiarkowanie skuteczne.",
+      "example": ""
+    },
+    {
+      "id": "paivio",
+      "label": "Allan Paivio",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Zaproponował teorię podwójnego kodowania w latach 70.",
+      "example": ""
+    },
+    {
+      "id": "mayer",
+      "label": "Richard Mayer",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Badania nad uczeniem się multimedialnym.",
+      "example": ""
+    },
+    {
+      "id": "slamecka",
+      "label": "Norman Slamecka i Peter Graf",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Demonstracja efektu generowania z 1978 r.",
+      "example": ""
+    },
+    {
+      "id": "rohrer",
+      "label": "Doug Rohrer i Kelli Taylor",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Badanie ćwiczenia zadań z matematyki w blokach i w mieszanej kolejności.",
+      "example": ""
+    },
+    {
+      "id": "sweller",
+      "label": "John Sweller",
+      "kind": "person",
+      "day": null,
+      "week": 3,
+      "summary": "Teoria obciążenia poznawczego.",
+      "example": ""
+    },
+    {
+      "id": "ericsson",
+      "label": "K. Anders Ericsson",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Praktyka celowa u ekspertów.",
+      "example": ""
+    },
+    {
+      "id": "locke",
+      "label": "Edwin Locke i Gary Latham",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Teoria wyznaczania celów.",
+      "example": ""
+    },
+    {
+      "id": "ames",
+      "label": "Carol Ames",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Literatura o celach osiągnięć.",
+      "example": ""
+    },
+    {
+      "id": "elliot",
+      "label": "Andrew Elliot",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Literatura o celach osiągnięć.",
+      "example": ""
+    },
+    {
+      "id": "thorndike",
+      "label": "Edward Thorndike",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Transfer zależy od wspólnych elementów zadań.",
+      "example": ""
+    },
+    {
+      "id": "ainslie",
+      "label": "George Ainslie",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Dyskontowanie hiperboliczne.",
+      "example": ""
+    },
+    {
+      "id": "mischel",
+      "label": "Walter Mischel",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Badania z piankami (marshmallow) o odroczeniu gratyfikacji.",
+      "example": ""
+    },
+    {
+      "id": "gollwitzer",
+      "label": "Peter Gollwitzer",
+      "kind": "person",
+      "day": null,
+      "week": 4,
+      "summary": "Intencje implementacyjne.",
+      "example": ""
+    }
+  ],
+  "edges": [
+    {
+      "source": "srl",
+      "relation": "uzupełnia",
+      "target": "sdl",
+      "basis": "stated"
+    },
+    {
+      "source": "srl",
+      "relation": "ma fazę",
+      "target": "forethought",
+      "basis": "stated"
+    },
+    {
+      "source": "srl",
+      "relation": "ma fazę",
+      "target": "performance",
+      "basis": "stated"
+    },
+    {
+      "source": "srl",
+      "relation": "ma fazę",
+      "target": "selfref",
+      "basis": "stated"
+    },
+    {
+      "source": "selfref",
+      "relation": "zasila",
+      "target": "forethought",
+      "basis": "stated"
+    },
+    {
+      "source": "performance",
+      "relation": "wykorzystuje",
+      "target": "self_control",
+      "basis": "stated"
+    },
+    {
+      "source": "meta",
+      "relation": "ma składnik",
+      "target": "meta_know",
+      "basis": "stated"
+    },
+    {
+      "source": "meta",
+      "relation": "ma składnik",
+      "target": "meta_reg",
+      "basis": "stated"
+    },
+    {
+      "source": "meta",
+      "relation": "napędza monitorowanie w",
+      "target": "srl",
+      "basis": "stated"
+    },
+    {
+      "source": "mindset",
+      "relation": "przewiduje",
+      "target": "persistence",
+      "basis": "stated"
+    },
+    {
+      "source": "mindset",
+      "relation": "podtrzymuje",
+      "target": "sdl",
+      "basis": "inferred"
+    },
+    {
+      "source": "motiv",
+      "relation": "podtrzymuje",
+      "target": "sdl",
+      "basis": "inferred"
+    },
+    {
+      "source": "motiv",
+      "relation": "wymaga",
+      "target": "autonomy",
+      "basis": "stated"
+    },
+    {
+      "source": "motiv",
+      "relation": "wymaga",
+      "target": "competence",
+      "basis": "stated"
+    },
+    {
+      "source": "motiv",
+      "relation": "wymaga",
+      "target": "relatedness",
+      "basis": "stated"
+    },
+    {
+      "source": "overjust",
+      "relation": "podważa",
+      "target": "motiv",
+      "basis": "stated"
+    },
+    {
+      "source": "test",
+      "relation": "jest rodzajem",
+      "target": "dd",
+      "basis": "stated"
+    },
+    {
+      "source": "space",
+      "relation": "jest rodzajem",
+      "target": "dd",
+      "basis": "stated"
+    },
+    {
+      "source": "inter",
+      "relation": "jest rodzajem",
+      "target": "dd",
+      "basis": "stated"
+    },
+    {
+      "source": "gen",
+      "relation": "jest powiązany z",
+      "target": "dd",
+      "basis": "stated"
+    },
+    {
+      "source": "gen",
+      "relation": "jest powiązany z",
+      "target": "test",
+      "basis": "stated"
+    },
+    {
+      "source": "forget",
+      "relation": "uzasadnia",
+      "target": "space",
+      "basis": "stated"
+    },
+    {
+      "source": "forget",
+      "relation": "wyjaśnia skuteczność",
+      "target": "test",
+      "basis": "stated"
+    },
+    {
+      "source": "illus",
+      "relation": "zniechęca do",
+      "target": "test",
+      "basis": "stated"
+    },
+    {
+      "source": "illus",
+      "relation": "zniechęca do",
+      "target": "space",
+      "basis": "stated"
+    },
+    {
+      "source": "illus",
+      "relation": "wynika z",
+      "target": "fluency",
+      "basis": "stated"
+    },
+    {
+      "source": "jol",
+      "relation": "opiera się na",
+      "target": "fluency",
+      "basis": "stated"
+    },
+    {
+      "source": "jol",
+      "relation": "zniekształcana przez",
+      "target": "illus",
+      "basis": "inferred"
+    },
+    {
+      "source": "jol",
+      "relation": "wykazuje",
+      "target": "dunning",
+      "basis": "stated"
+    },
+    {
+      "source": "test",
+      "relation": "poprawia trafność",
+      "target": "jol",
+      "basis": "inferred"
+    },
+    {
+      "source": "test",
+      "relation": "koryguje",
+      "target": "illus",
+      "basis": "stated"
+    },
+    {
+      "source": "dd",
+      "relation": "wymaga",
+      "target": "prior_know",
+      "basis": "stated"
+    },
+    {
+      "source": "ei",
+      "relation": "wymaga",
+      "target": "prior_know",
+      "basis": "stated"
+    },
+    {
+      "source": "intrinsic_load",
+      "relation": "zależy od",
+      "target": "prior_know",
+      "basis": "stated"
+    },
+    {
+      "source": "dd",
+      "relation": "poprawia",
+      "target": "transfer",
+      "basis": "stated"
+    },
+    {
+      "source": "inter",
+      "relation": "poprawia",
+      "target": "transfer",
+      "basis": "stated"
+    },
+    {
+      "source": "space",
+      "relation": "poprawia",
+      "target": "near",
+      "basis": "stated"
+    },
+    {
+      "source": "test",
+      "relation": "poprawia",
+      "target": "near",
+      "basis": "stated"
+    },
+    {
+      "source": "inter",
+      "relation": "poprawia",
+      "target": "near",
+      "basis": "stated"
+    },
+    {
+      "source": "inter",
+      "relation": "dodaje korzyść z",
+      "target": "space",
+      "basis": "stated"
+    },
+    {
+      "source": "ei",
+      "relation": "buduje",
+      "target": "encoding",
+      "basis": "stated"
+    },
+    {
+      "source": "dual",
+      "relation": "buduje",
+      "target": "encoding",
+      "basis": "stated"
+    },
+    {
+      "source": "gen",
+      "relation": "buduje",
+      "target": "encoding",
+      "basis": "stated"
+    },
+    {
+      "source": "inter",
+      "relation": "buduje",
+      "target": "discrimination",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "ma składnik",
+      "target": "intrinsic_load",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "ma składnik",
+      "target": "extraneous_load",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "ma składnik",
+      "target": "germane_load",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "ograniczana przez",
+      "target": "working_mem",
+      "basis": "stated"
+    },
+    {
+      "source": "germane_load",
+      "relation": "buduje",
+      "target": "schema",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "stanowi ramę dla",
+      "target": "ei",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "stanowi ramę dla",
+      "target": "dual",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "stanowi ramę dla",
+      "target": "gen",
+      "basis": "stated"
+    },
+    {
+      "source": "clt",
+      "relation": "stanowi ramę dla",
+      "target": "inter",
+      "basis": "stated"
+    },
+    {
+      "source": "dp",
+      "relation": "wymaga",
+      "target": "feedback",
+      "basis": "stated"
+    },
+    {
+      "source": "dp",
+      "relation": "różni się od",
+      "target": "mere_rep",
+      "basis": "stated"
+    },
+    {
+      "source": "dp",
+      "relation": "zależy od",
+      "target": "jol",
+      "basis": "stated"
+    },
+    {
+      "source": "goal",
+      "relation": "ma składnik",
+      "target": "mastery",
+      "basis": "stated"
+    },
+    {
+      "source": "goal",
+      "relation": "ma składnik",
+      "target": "perfgoal",
+      "basis": "stated"
+    },
+    {
+      "source": "mastery",
+      "relation": "kontrastuje z",
+      "target": "perfgoal",
+      "basis": "stated"
+    },
+    {
+      "source": "mastery",
+      "relation": "przewiduje",
+      "target": "persistence",
+      "basis": "stated"
+    },
+    {
+      "source": "mastery",
+      "relation": "przypomina",
+      "target": "mindset",
+      "basis": "inferred"
+    },
+    {
+      "source": "goal",
+      "relation": "informuje",
+      "target": "forethought",
+      "basis": "inferred"
+    },
+    {
+      "source": "transfer",
+      "relation": "ma składnik",
+      "target": "near",
+      "basis": "stated"
+    },
+    {
+      "source": "transfer",
+      "relation": "ma składnik",
+      "target": "far",
+      "basis": "stated"
+    },
+    {
+      "source": "far",
+      "relation": "wymaga",
+      "target": "dp",
+      "basis": "stated"
+    },
+    {
+      "source": "td",
+      "relation": "podważa",
+      "target": "self_control",
+      "basis": "stated"
+    },
+    {
+      "source": "hyperbolic",
+      "relation": "jest formą",
+      "target": "td",
+      "basis": "stated"
+    },
+    {
+      "source": "delayed_grat",
+      "relation": "jest powiązany z",
+      "target": "td",
+      "basis": "stated"
+    },
+    {
+      "source": "impl_int",
+      "relation": "przeciwdziała",
+      "target": "td",
+      "basis": "stated"
+    },
+    {
+      "source": "precommit",
+      "relation": "przeciwdziała",
+      "target": "td",
+      "basis": "stated"
+    },
+    {
+      "source": "knowles",
+      "relation": "autor",
+      "target": "sdl",
+      "basis": "stated"
+    },
+    {
+      "source": "grow",
+      "relation": "autor",
+      "target": "sdl",
+      "basis": "stated"
+    },
+    {
+      "source": "zimmerman",
+      "relation": "autor",
+      "target": "srl",
+      "basis": "stated"
+    },
+    {
+      "source": "flavell",
+      "relation": "autor",
+      "target": "meta",
+      "basis": "stated"
+    },
+    {
+      "source": "dweck",
+      "relation": "autor",
+      "target": "mindset",
+      "basis": "stated"
+    },
+    {
+      "source": "dweck",
+      "relation": "współautor",
+      "target": "goal",
+      "basis": "stated"
+    },
+    {
+      "source": "deci_ryan",
+      "relation": "autor",
+      "target": "motiv",
+      "basis": "stated"
+    },
+    {
+      "source": "roediger",
+      "relation": "autor",
+      "target": "test",
+      "basis": "stated"
+    },
+    {
+      "source": "roediger",
+      "relation": "badania nad",
+      "target": "illus",
+      "basis": "stated"
+    },
+    {
+      "source": "ebbinghaus",
+      "relation": "autor",
+      "target": "forget",
+      "basis": "stated"
+    },
+    {
+      "source": "ebbinghaus",
+      "relation": "udokumentowanie",
+      "target": "space",
+      "basis": "stated"
+    },
+    {
+      "source": "cepeda",
+      "relation": "przegląd badań",
+      "target": "space",
+      "basis": "stated"
+    },
+    {
+      "source": "bjork",
+      "relation": "autor",
+      "target": "dd",
+      "basis": "stated"
+    },
+    {
+      "source": "koriat",
+      "relation": "badania nad",
+      "target": "illus",
+      "basis": "stated"
+    },
+    {
+      "source": "koriat",
+      "relation": "badania nad",
+      "target": "jol",
+      "basis": "stated"
+    },
+    {
+      "source": "metcalfe",
+      "relation": "badania nad",
+      "target": "jol",
+      "basis": "stated"
+    },
+    {
+      "source": "pressley",
+      "relation": "autor",
+      "target": "ei",
+      "basis": "stated"
+    },
+    {
+      "source": "dunlosky",
+      "relation": "przegląd badań",
+      "target": "ei",
+      "basis": "stated"
+    },
+    {
+      "source": "paivio",
+      "relation": "autor",
+      "target": "dual",
+      "basis": "stated"
+    },
+    {
+      "source": "mayer",
+      "relation": "rozszerzenie teorii",
+      "target": "dual",
+      "basis": "stated"
+    },
+    {
+      "source": "slamecka",
+      "relation": "wykazanie efektu",
+      "target": "gen",
+      "basis": "stated"
+    },
+    {
+      "source": "rohrer",
+      "relation": "badania nad",
+      "target": "inter",
+      "basis": "stated"
+    },
+    {
+      "source": "sweller",
+      "relation": "autor",
+      "target": "clt",
+      "basis": "stated"
+    },
+    {
+      "source": "ericsson",
+      "relation": "autor",
+      "target": "dp",
+      "basis": "stated"
+    },
+    {
+      "source": "locke",
+      "relation": "autor",
+      "target": "goal",
+      "basis": "stated"
+    },
+    {
+      "source": "ames",
+      "relation": "współautor",
+      "target": "goal",
+      "basis": "stated"
+    },
+    {
+      "source": "elliot",
+      "relation": "współautor",
+      "target": "goal",
+      "basis": "stated"
+    },
+    {
+      "source": "thorndike",
+      "relation": "autor",
+      "target": "transfer",
+      "basis": "stated"
+    },
+    {
+      "source": "ainslie",
+      "relation": "autor",
+      "target": "hyperbolic",
+      "basis": "stated"
+    },
+    {
+      "source": "mischel",
+      "relation": "autor",
+      "target": "delayed_grat",
+      "basis": "stated"
+    },
+    {
+      "source": "gollwitzer",
+      "relation": "autor",
+      "target": "impl_int",
+      "basis": "stated"
+    }
+  ]
+}
