@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/classical-4dd99f8a-1b0a-4034-9c9d-97d52fa52633/styles.css">
+  <script src="_ds/classical-4dd99f8a-1b0a-4034-9c9d-97d52fa52633/_ds_bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+  <style>html,body{margin:0;background:#0f0d0a}a{color:#facb8d;text-decoration:none}a:hover{color:#ffe3bf}button{font-family:inherit}</style>
+</helmet>
+<div style="min-height: 100vh; background: #0f0d0a; font-family: Lora, Georgia, serif; padding: 56px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 64px; justify-content: center; align-items: flex-start">
+  <sc-for list="{{ phones }}" as="ph" hint-placeholder-count="2">
+    <div style="display: flex; flex-direction: column; gap: 18px; align-items: center">
+      <span style="font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #a49a8d">{{ ph.label }}</span>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+        <div style="position: relative; height: 100%; overflow: hidden; background: #14110d; color: #fff3e4; font-family: Lora, Georgia, serif; -webkit-font-smoothing: antialiased; isolation: isolate">
+          <div aria-hidden="true" style="position: absolute; top: -260px; right: -220px; width: 620px; height: 620px; pointer-events: none; z-index: -1; background: radial-gradient(closest-side, rgba(194,141,65,0.182), rgba(194,141,65,0.078) 40%, rgba(120,78,30,0.033) 70%, rgba(120,78,30,0) 100%)"></div>
+          <div aria-hidden="true" style="position: absolute; top: -160px; left: -160px; width: 380px; height: 420px; pointer-events: none; z-index: -1; background: radial-gradient(closest-side, rgba(255,227,191,0.117), rgba(217,207,194,0.065) 45%, rgba(217,207,194,0) 100%)"></div>
+
+          <div style="height: 100%; overflow-y: auto; scrollbar-width: none">
+            <header style="padding: 60px 20px 16px; display: flex; align-items: center; gap: 12px">
+              <a href="#" style="display: flex; align-items: center; gap: 10px; color: #fff3e4">
+                <svg width="30" height="30" viewBox="-6 -6 76 76" fill="none" style="display: block">
+                  <g transform="rotate(-45 32 32)">
+                    <g stroke="#c28d41" stroke-width="5" stroke-linecap="round">
+                      <path d="M18 25 C15 19 13 14 10 8"></path><path d="M15 31.5 C12 30.5 10 31 7 30"></path><path d="M18 38.5 C15 43 13 46 11 50"></path><path d="M33 32 H48"></path><path d="M48 32 C52 28 55 25 59 22"></path><path d="M48 32 C51 35 53 37 55 40"></path>
+                    </g>
+                    <circle cx="24" cy="32" r="9.5" fill="#ffe3bf"></circle>
+                    <g fill="#facb8d"><circle cx="10" cy="8" r="3.8"></circle><circle cx="7" cy="30" r="3.4"></circle><circle cx="11" cy="50" r="3.6"></circle><circle cx="59" cy="22" r="3.6"></circle><circle cx="55" cy="40" r="3.2"></circle></g>
+                  </g>
+                </svg>
+                <span style="display: flex; flex-direction: column; gap: 3px">
+                  <span style="font-weight: 500; font-size: 18px; line-height: 1; letter-spacing: -0.01em"><span style="color: #facb8d">Any</span>Learn</span>
+                  <span style="font-size: 8px; letter-spacing: 0.36em; text-transform: uppercase; color: #c28d41">Labs</span>
+                </span>
+              </a>
+              <button onClick="{{ ph.open }}" aria-label="Otwórz menu" style="margin-left: auto; width: 44px; height: 44px; border-radius: 4px; border: 1px solid #3a3025; background: transparent; color: #facb8d; display: flex; align-items: center; justify-content: center; cursor: pointer" style-hover="border-color: #c28d41">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M10 17h10"></path></svg>
+              </button>
+            </header>
+
+            <section style="padding: 32px 20px 40px; display: flex; flex-direction: column; gap: 22px">
+              <span style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: #c28d41">Self-paced learning</span>
+              <h1 style="margin: 0; font-family: Lora, Georgia, serif; font-weight: 500; font-size: 40px; line-height: 1.08; letter-spacing: -0.02em; color: #fff3e4; text-wrap: balance">Learn anything, <span style="color: #facb8d; font-style: italic; font-weight: 400">one lesson</span> at a time.</h1>
+              <p style="margin: 0; font-size: 16px; line-height: 1.65; color: #bab0a3; text-wrap: pretty">Short courses and long-form essays, written to be worked through on your own. No schedule, no cohort — start where you are and keep going.</p>
+              <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 4px">
+                <a href="#" style="display: flex; align-items: center; justify-content: center; height: 48px; font-size: 16px; color: #14110d; background: #facb8d; border-radius: 4px">Browse courses</a>
+                <a href="#" style="display: flex; align-items: center; justify-content: center; height: 48px; font-size: 16px; color: #facb8d; border: 1px solid #5a4a36; border-radius: 4px">Read the blog</a>
+              </div>
+            </section>
+            <div style="width: 300px; height: 300px; margin: 0 auto 48px">
+              <dc-import name="AnyLearn Brain" embedded="{{ true }}" ambient="{{ false }}" style="width: 100%; height: 100%" hint-size="100%,100%"></dc-import>
+            </div>
+          </div>
+
+          <div onClick="{{ ph.close }}" style="position: absolute; inset: 0; background: rgba(10,8,6,0.62); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); transition: opacity 320ms ease; opacity: {{ ph.scrimOpacity }}; pointer-events: {{ ph.scrimEvents }}"></div>
+
+          <aside style="position: absolute; top: 0; right: 0; bottom: 0; width: 84%; background: #17130f; border-left: 1px solid #2e261d; display: flex; flex-direction: column; padding: 60px 24px 40px; box-sizing: border-box; transition: transform 380ms cubic-bezier(.2,.7,.2,1); transform: {{ ph.panelX }}; box-shadow: -24px 0 48px rgba(0,0,0,0.35)">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid #2e261d">
+              <span style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: #c28d41">Menu</span>
+              <button onClick="{{ ph.close }}" aria-label="Zamknij menu" style="width: 44px; height: 44px; margin-right: -10px; border: 0; background: transparent; color: #d9cfc2; display: flex; align-items: center; justify-content: center; cursor: pointer" style-hover="color: #facb8d">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+            </div>
+
+            <nav style="display: flex; flex-direction: column">
+              <sc-for list="{{ links }}" as="l" hint-placeholder-count="3">
+                <a href="#" style="display: grid; grid-template-columns: 36px minmax(0,1fr) auto; align-items: baseline; gap: 8px; padding: 20px 0; border-bottom: 1px solid #2e261d; color: #fff3e4" style-hover="color: #facb8d">
+                  <span style="font-size: 13px; color: #c28d41; font-variant-numeric: tabular-nums">{{ l.num }}</span>
+                  <span style="display: flex; flex-direction: column; gap: 4px">
+                    <span style="font-size: 26px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1">{{ l.label }}</span>
+                    <span style="font-size: 13px; color: #a49a8d">{{ l.sub }}</span>
+                  </span>
+                  <span style="font-size: 16px; color: #5a4a36">→</span>
+                </a>
+              </sc-for>
+            </nav>
+
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px">
+              <a href="#" style="display: flex; align-items: center; justify-content: center; height: 48px; font-size: 16px; color: #facb8d; border: 1px solid #c28d41; border-radius: 4px" style-hover="background: #2a2117; color: #ffe3bf">Start learning</a>
+              <a href="#" style="display: flex; align-items: center; justify-content: center; height: 48px; font-size: 16px; color: #d9cfc2">Sign in</a>
+            </div>
+          </aside>
+        </div>
+      </x-import>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: [false, true] };
+  renderVals() {
+    const set = (i, v) => () => this.setState(s => ({ open: s.open.map((o, j) => j === i ? v : o) }));
+    return {
+      phones: ['Menu zamknięte', 'Menu otwarte'].map((label, i) => {
+        const o = this.state.open[i];
+        return { label, open: set(i, true), close: set(i, false),
+          panelX: o ? 'translateX(0)' : 'translateX(105%)',
+          scrimOpacity: o ? 1 : 0, scrimEvents: o ? 'auto' : 'none' };
+      }),
+      links: [
+        { num: '01', label: 'Courses', sub: 'Structured paths, each about a weekend\u2019s work' },
+        { num: '02', label: 'Blog', sub: 'Long-form essays on learning' },
+        { num: '03', label: 'About', sub: 'Who makes AnyLearn Labs' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
